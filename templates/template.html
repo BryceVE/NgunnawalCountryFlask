@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/static/ngunnawal.css">
+    {% block pageStyle %}
+    {% endblock %}
+</head>
+<body>
+
+<!-- Nav bar -->
+<div class="navbar">
+    <img src="/static/images/logo.png" alt="logo" width="60" height="60">
+    <a href="index.html">Home Page</a>
+    <a href="history.html">Ngunnawal History</a>
+    <a href="photo.html">Photo Album</a>
+    <a href="contact.html">Contact Us</a>
+    <!-- Search Box -->
+    <div class="search-container">
+        <form action="index.html">
+            <button type="submit"><img src="/static/images/search.png" width="20" height="20"></button>
+            <input type="text" placeholder="Search...">
+        </form>
+    </div>
+</div>
+
+<!-- Banner -->
+<div class="banner">
+    <img src="/static/images/banner.png" alt="website banner">
+</div>
+
+<!-- Page Content -->
+<div class="grid-container">
+    <div class="full-width">
+        <h1>{{ title }}</h1>
+    </div>
+    <div class="full-width"> <!--cell 1-->
+        {% block cellContent1 %} {% endblock %}
+        <br>
+        {% block cellContent2 %} {% endblock %}
+    </div>
+    <div> <!--cell 2-->
+        {% block cellContent3 %} {% endblock %}
+        <br>
+        {% block cellContent4 %} {% endblock %}
+    </div>
+    <div> <!--cell 3-->
+        {% block cellContent5 %} {% endblock %}
+    </div>
+    <div class="full-width">
+        {% block cellContent6 %} {% endblock %}
+    </div>
+    <div class="full-width">
+        {% block cellContent7 %} {% endblock %}
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <p>
+        Page Footer
+    </p>
+</div>
+</body>
+</html>
