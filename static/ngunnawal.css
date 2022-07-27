@@ -12,7 +12,7 @@ body {
 /**** BANNER *****/
 
 .banner > img {
-    margin-top: 57px;
+    margin-top: 76px; /*76 is good*/
     display: block;
     margin-left: auto;
     margin-right: auto;
