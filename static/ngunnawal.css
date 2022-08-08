@@ -149,6 +149,16 @@ body {
     padding-left: 1em;
 }
 
+/*line seperator*/
+hr.solid {
+  border-top: 3px solid #bbb;
+}
+
+/*row seperator*/
+.vertical-divider {
+    border-right: 3px solid #d8d8d8;
+}
+
 /**** IMAGE CAROUSEL ****/
 
 /* Code from W3 Schools https://www.w3schools.com/howto/howto_js_slideshow.asp */

@@ -14,3 +14,9 @@ class Contact(db.Model):
         self.email = email
         self.message = message
         self.dateSubmitted = datetime.today()
+
+
+class todo (db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    text = db.Column(db.Text)
+    done = db.Column(db.Boolean)

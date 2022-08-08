@@ -1,0 +1,49 @@
+{% extends 'template.html' %}
+
+{# Place the content for the cellContent1 in this block #}
+{% block cellContent1 %}
+    <div class="row">
+        <div class="col-5 vertical-divider">
+            <h2>Add Todo</h2>
+            <form method="POST" action="">
+                <input type="text" name="text" placeholder="Add a new TODO item" class="form-control-sm">
+                <button type="submit" value="update" class="form-control-sm">Create new entry</button>
+            </form>
+        </div>
+
+
+        <div class="col-6">
+            <h2>Todo List</h2>
+            {% for todo in todos %}
+                <hr class="solid">
+                <p>
+                <form method="POST" action="/todoedit/{{ todo.id }}">
+                    <input type="hidden" name="done" value="off">
+                    <input type="checkbox" onclick="redirect('/todoedit/{{ todo.id }}')"
+                           data-target="/todoedit/{{ todo.id }}" name="done">
+                    <input type="text" title="{{ todo.dateAdded }}" value="{{ todo.text }}" name="text"
+                           class="form-text">
+                    <button type="submit" value="update" class="form-control-sm">Update</button>
+                </form>
+                <form method="GET" action="/todoedit/{{ todo.id }}">
+                    <button type="submit" value="delete" class="form-control-sm">Delete</button>
+                </form>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{# Place the content for the cellContent2 in this block #}
+{% block cellContent2 %}
+
+{% endblock %}
+
+{# Place the content for the cellContent3 in this block #}
+{% block cellContent3 %}
+
+{% endblock %}
+
+{# Place the content for the cellContent4 in this block #}
+{% block cellContent4 %}
+
+{% endblock %}
