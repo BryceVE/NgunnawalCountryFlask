@@ -14,31 +14,35 @@
 <!-- Nav bar -->
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
+        {# Logo in nav-bar #}
         <a>
             <img src="/static/images/logo.png" alt="logo" width="60" height="60">
         </a>
+        {# button for expanding nav-bar, used when screen is small #}
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
+                {# list of all nav-bar elements in order #}
                 <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a>
+                    <a class="nav-link" href="/">Home</a> {# Index/Home page #}
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="history.html">History</a>
+                    <a class="nav-link" href="history.html">History</a> {# History Page (not implemented) #}
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="photo.html">Photo Album</a>
+                    <a class="nav-link" href="photo.html">Photo Album</a> {# Photo Album page (not implemented) #}
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Contact Us</a>
+                    <a class="nav-link" href="contact.html">Contact Us</a> {# Contact us page #}
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="todo.html">To Do</a>
+                    <a class="nav-link" href="todo.html">To Do</a> {# To Do page #}
                 </li>
             </ul>
+            {# search box and button #}
             <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-secondary" type="submit">Search</button>
@@ -52,18 +56,21 @@
     <img src="/static/images/banner.png" alt="website banner">
 </div>
 
-<!-- Page Content -->
+<!-- Page Content (all page information/content goes in these) -->
 <div class="container-fluid">
+{# New row #}
     <div class="row">
         <div class="col-12 align-centre">
             <h1>{{ title }}</h1>
         </div>
     </div>
+{# New row #}
     <div class="row">
         <div class="col-12">
             {% block cellContent1 %} {% endblock %}
         </div>
     </div>
+{# New row, contains two columns #}
     <div class="row">
         <div class="col-6">
             {% block cellContent2 %} {% endblock %}
@@ -72,6 +79,7 @@
             {% block cellContent3 %} {% endblock %}
         </div>
     </div>
+{# New row #}
     <div class="row">
         <div class="col-12">
             {% block cellContent4 %} {% endblock %}

@@ -2,29 +2,37 @@
 
 {# Place the content for the cellContent1 in this block #}
 {% block cellContent1 %}
+    {# Add To Do #}
     <div class="row">
+        {# vertical divider creates a line between this and the to do list column #}
         <div class="col-5 vertical-divider">
             <h2>Add Todo</h2>
             <form method="POST" action="">
+                {# add to do input box #}
                 <input type="text" name="text" placeholder="Add a new TODO item" class="form-control-sm">
+                {# add new to do submit button #}
                 <button type="submit" value="update" class="form-control-sm">Create new entry</button>
             </form>
         </div>
 
-
+        {# To do List #}
         <div class="col-6">
             <h2>Todo List</h2>
-            {% for todo in todos %}
-                <hr class="solid">
-                <p>
+            {% for todo in todos %} {# loops through all entries in to do table in the database #}
+                <p> {# line break #}
+                <hr class="horizontal-divider"> {# horizontal divider creates a line between each to do entry #}
                 <form method="POST" action="/todoedit/{{ todo.id }}">
                     <input type="hidden" name="done" value="off">
+                    {# little checkbox #}
                     <input type="checkbox" onclick="redirect('/todoedit/{{ todo.id }}')"
                            data-target="/todoedit/{{ todo.id }}" name="done">
+                    {# input showing text of to do #}
                     <input type="text" title="{{ todo.dateAdded }}" value="{{ todo.text }}" name="text"
                            class="form-text">
+                    {# update button #}
                     <button type="submit" value="update" class="form-control-sm">Update</button>
                 </form>
+                {# delete button #}
                 <form method="GET" action="/todoedit/{{ todo.id }}">
                     <button type="submit" value="delete" class="form-control-sm">Delete</button>
                 </form>

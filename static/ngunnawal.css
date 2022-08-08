@@ -144,17 +144,18 @@ body {
     bottom: 0;
 }
 
+/*footer positioning*/
 .footer > p {
-    float: left;
+    float: bottom;
     padding-left: 1em;
 }
 
-/*line seperator*/
-hr.solid {
+/*horizontal seperator*/
+hr.horizontal-divider {
   border-top: 3px solid #bbb;
 }
 
-/*row seperator*/
+/*vertical seperator*/
 .vertical-divider {
     border-right: 3px solid #d8d8d8;
 }
