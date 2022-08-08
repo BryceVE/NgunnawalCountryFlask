@@ -40,8 +40,7 @@ def view_todo():
         db.session.add(new_todo)  # adds new entry into the to do table
         db.session.commit()  # commits added row to database
         db.session.refresh(new_todo)  # refreshes the database
-        return render_template("todo.html", todos=all_todo)  # sends the user back to the to do page
-
+        return redirect("/todo.html")  # sends the user back to the to do page
     return render_template("todo.html", todos=all_todo)  # sends the user back to the to do page
 
 
