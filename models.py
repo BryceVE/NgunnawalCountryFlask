@@ -18,7 +18,7 @@ class Contact(db.Model):
 
 
 # for To do form to use what the user has submitted
-class ToDo (db.Model):
+class todo (db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     text = db.Column(db.Text)
     done = db.Column(db.Boolean)
