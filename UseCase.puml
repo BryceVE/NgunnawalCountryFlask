@@ -1,0 +1,37 @@
+@startuml
+left to right direction
+actor "Unregistered User" as unregistered
+actor "Registered User" as registered
+actor "Admin" as admin
+
+package NgunnawalWebsite {
+usecase "Photo Gallery" as UCGallery
+usecase "Upload Photo" as UCUpload
+usecase "User Registration" as UCRegister
+usecase "User Login" as UCLogin
+usecase "User Logout" as UCLogout
+usecase "Account Details" as UCAccount
+usecase "Use Account Details" as UCUseAccount
+usecase "Reset Password" as UCResetP
+usecase "Manage Photos" as UCPhotoManage
+}
+
+unregistered --> UCRegister : Only once
+unregistered --> UCLogin
+unregistered --> UCGallery
+
+registered --> UCLogout
+registered --> UCAccount
+registered --> UCUseAccount
+registered --> UCResetP
+registered --> UCGallery
+registered --> UCUpload
+
+UCLogout <-- admin
+UCAccount <-- admin
+UCUseAccount <-- admin
+UCResetP <-- admin
+UCGallery <-- admin
+UCUpload <-- admin
+UCPhotoManage <-- admin
+@enduml
