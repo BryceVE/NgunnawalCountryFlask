@@ -41,11 +41,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="todo.html">To-Do</a> {# To Do page #}
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="register">Register</a> {# register page #}
+                </li>
             </ul>
             {# search box and button #}
             <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-secondary" type="submit">Search</button>
+                <button class="btn btn-outline-secondary" type="submit"><img src="/static/images/search.png" width="20" style="opacity: 60%"></button>
             </form>
         </div>
     </div>
@@ -58,19 +61,19 @@
 
 <!-- Page Content (all page information/content goes in these) -->
 <div class="container-fluid">
-{# New row #}
+    {# New row #}
     <div class="row">
         <div class="col-12 align-centre">
             <h1>{{ title }}</h1>
         </div>
     </div>
-{# New row #}
+    {# New row #}
     <div class="row">
         <div class="col-12">
             {% block cellContent1 %} {% endblock %}
         </div>
     </div>
-{# New row, contains two columns #}
+    {# New row, contains two columns #}
     <div class="row">
         <div class="col-6">
             {% block cellContent2 %} {% endblock %}
@@ -79,7 +82,7 @@
             {% block cellContent3 %} {% endblock %}
         </div>
     </div>
-{# New row #}
+    {# New row #}
     <div class="row">
         <div class="col-12">
             {% block cellContent4 %} {% endblock %}
