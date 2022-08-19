@@ -14,8 +14,8 @@
 <!-- Nav bar -->
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
-        {# Logo in nav-bar #}
-        <a>
+        {# Logo in nav-bar (brings user to index page) #}
+        <a href="/">
             <img src="/static/images/logo.png" alt="logo" width="60" height="60">
         </a>
         {# button for expanding nav-bar, used when screen is small #}
@@ -45,12 +45,12 @@
                     <a class="nav-link" href="register">Register</a> {# register page #}
                 </li>
             </ul>
-            {# search box and button #}
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-secondary" type="submit"><img src="/static/images/search.png" width="20" style="opacity: 60%"></button>
-            </form>
         </div>
+        {# search box and button #}
+        <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-secondary" type="submit"><img src="/static/images/search.png" width="20" style="opacity: 60%"></button>
+        </form>
     </div>
 </nav>
 

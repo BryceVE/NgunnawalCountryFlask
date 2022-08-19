@@ -14,7 +14,7 @@ from forms import ContactForm, RegistrationForm
 # Index / Home page
 @app.route('/')
 def homepage():
-    return render_template("index.html", title="Ngunnawal Country")
+    return render_template("index.html", title="Home Page")
 
 
 if __name__ == '__main__':
