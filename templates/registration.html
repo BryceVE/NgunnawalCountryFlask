@@ -1,0 +1,55 @@
+{% extends 'template.html' %}
+
+{# Place the content for the cellContent1 in this block #}
+{% block cellContent1 %}
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        {# Email #}
+        <p>
+            {{ form.email_address.label }}<br>
+            {{ form.email_address(size=32) }}<br>
+            {% for error in form.email_address.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        {# Name #}
+        <p>
+            {{ form.name.label }}<br>
+            {{ form.name(size=32) }}<br>
+            {% for error in form.name.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        {# Password #}
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password(size=32) }}<br>
+            {% for error in form.password.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        {# Password confirm #}
+        <p>
+            {{ form.password_confirm.label }}<br>
+            {{ form.password_confirm(size=32) }}<br>
+            {% for error in form.password_confirm.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+    </form>
+{% endblock %}
+
+{# Place the content for the cellContent2 in this block #}
+{% block cellContent2 %}
+    Left cell
+{% endblock %}
+
+{# Place the content for the cellContent3 in this block #}
+{% block cellContent3 %}
+    Right cell
+{% endblock %}
+
+{# Place the content for the cellContent4 in this block #}
+{% block cellContent4 %}
+    Bottom cell
+{% endblock %}
