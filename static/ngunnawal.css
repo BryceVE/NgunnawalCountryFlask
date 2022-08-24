@@ -139,7 +139,7 @@ body {
 
 .footer {
     overflow: hidden;
-    background-color: #ffffff;
+    background-color: rgb(245, 245, 245);
     width: 100%;
     bottom: 0;
 }

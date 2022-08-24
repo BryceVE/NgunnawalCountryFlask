@@ -2,6 +2,9 @@
 
 {# Place the content for the cellContent1 in this block #}
 {% block cellContent1 %}
+    {% if not user.is_anonymous %}
+        Welcome {{ user.name }}! <br>
+    {% endif %}
     First cell <br>-<br>-<br>-<br>-<br>-<br>-
 {% endblock %}
 

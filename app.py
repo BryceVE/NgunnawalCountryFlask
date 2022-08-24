@@ -1,20 +1,23 @@
 from flask import Flask, render_template, request, redirect, url_for
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import current_user, login_user, LoginManager, logout_user, login_required
 
 app = Flask(__name__)
 app.config.from_object(Config)  # loads the configuration for the database
 db = SQLAlchemy(app)  # creates the db object using the configuration
+login = LoginManager(app)
+login.login_view = 'login'
 
 # these imports must be after (db = SQLAlchemy(app))
 from models import Contact, todo, User
-from forms import ContactForm, RegistrationForm
+from forms import ContactForm, RegistrationForm, LoginForm
 
 
 # Index / Home page
 @app.route('/')
 def homepage():
-    return render_template("index.html", title="Home Page")
+    return render_template("index.html", title="Home Page", user=current_user)
 
 
 if __name__ == '__main__':
@@ -22,7 +25,7 @@ if __name__ == '__main__':
 
 
 # Contact us page
-@app.route("/contact.html", methods=["POST", "GET"])
+@app.route("/contact", methods=["POST", "GET"])
 def contact():
     form = ContactForm()
     if form.validate_on_submit():  # if all input boxes have valid entries
@@ -31,11 +34,11 @@ def contact():
         db.session.commit()  # commits added entry to database
         return redirect("/")  # redirects user to home page
 
-    return render_template("contact.html", title="Contact Us", form=form)
+    return render_template("contact.html", title="Contact Us", form=form, user=current_user)
 
 
 # To do page
-@app.route('/todo.html', methods=["POST", "GET"])
+@app.route('/todo', methods=["POST", "GET"])
 def view_todo():
     all_todo = db.session.query(todo).all()  # retrieves whole of to do table from database
     if request.method == "POST":  # if form is attempting to submit data
@@ -45,7 +48,7 @@ def view_todo():
         db.session.commit()  # commits added entry (row) to database
         db.session.refresh(new_todo)  # refreshes the database
         return redirect("/todo.html")  # sends the user back to the to do page
-    return render_template("todo.html", todos=all_todo)  # sends the user back to the to do page
+    return render_template("todo.html", todos=all_todo, user=current_user)  # sends the user back to the to do page
 
 
 # to do page for editing to do entries
@@ -73,4 +76,24 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for("homepage"))
-    return render_template("registration.html", title="User Registration", form=form)
+    return render_template("registration.html", title="Register Account", form=form, user=current_user)
+
+
+# login page
+@app.route('/login', methods=["GET", "POST"])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email_address=form.email_address.data).first()
+        if user is None or not user.check_password(form.password.data):
+            return redirect(url_for('login'))
+        login_user(user)
+        return redirect(url_for('homepage'))
+    return render_template("login.html", title="Log In", form=form, user=current_user)
+
+
+# logout
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('homepage'))

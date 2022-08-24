@@ -9,9 +9,10 @@
             <h2>Add Todo</h2>
             <form method="POST" action="">
                 {# add to do input box #}
-                <input type="text" name="text" placeholder="Add a new TODO item" class="form-control-sm">
+                <input type="text" name="text" placeholder="Add a new TODO item" class="form-control">
+                <br>
                 {# add new to do submit button #}
-                <button type="submit" value="update" class="form-control-sm">Create new entry</button>
+                <button type="submit" value="update" class="btn btn-primary">Create new entry</button>
             </form>
         </div>
 
@@ -37,6 +38,7 @@
                     <button type="submit" value="delete" class="form-control-sm">Delete</button>
                 </form>
             {% endfor %}
+            <br>
         </div>
     </div>
 {% endblock %}

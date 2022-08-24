@@ -36,21 +36,36 @@
                     <a class="nav-link" href="photo.html">Photo Album</a> {# Photo Album page (not implemented) #}
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Contact Us</a> {# Contact us page #}
+                    <a class="nav-link" href="contact">Contact Us</a> {# Contact us page #}
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="todo.html">To-Do</a> {# To Do page #}
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="register">Register</a> {# register page #}
+                    <a class="nav-link" href="todo">To-Do</a> {# To Do page #}
                 </li>
             </ul>
         </div>
         {# search box and button #}
         <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-secondary" type="submit"><img src="/static/images/search.png" width="20" style="opacity: 60%"></button>
+            <button class="btn btn-outline-secondary" type="submit"><img src="/static/images/search.png" width="20"
+                                                                         style="opacity: 60%"></button>
         </form>
+        <ul class="navbar-nav">
+            {% if user.is_anonymous %}
+                <li class="nav-item">
+                    <a class="nav-link" href="register">Register</a> {# register page #}
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="login">Log In</a> {# login page #}
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link">{{ user.name }}</a> {# display user name #}
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="logout">Log Out</a> {# user logout #}
+                </li>
+            {% endif %}
+        </ul>
     </div>
 </nav>
 
@@ -91,10 +106,8 @@
 </div>
 
 <!-- Footer -->
-<div class="footer">
-    <p>
-        Page Footer
-    </p>
+<div class="footer sticky-bottom border-top border-3">
+    Page Footer
 </div>
 </body>
 </html>
