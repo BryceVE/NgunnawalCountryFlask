@@ -13,11 +13,11 @@ class ContactForm (FlaskForm):
 
 
 class RegistrationForm(FlaskForm):
-    email_address = StringField("Email Address (Username)", validators=[DataRequired(), Email()])
-    name = StringField("Full Name", validators=[DataRequired()])
-    password = PasswordField("Password", validators=[DataRequired()])
-    password_confirm = PasswordField("Confirm Password", validators=[DataRequired(), EqualTo("password")])
-    submit = SubmitField("Register")
+    email_address = StringField("Email Address (Username)", validators=[DataRequired(), Email()], render_kw={"class": "form-control", "placeholder": "Email"})
+    name = StringField("Full Name", validators=[DataRequired()], render_kw={"class": "form-control", "placeholder": "Full Name"})
+    password = PasswordField("Password", validators=[DataRequired()], render_kw={"class": "form-control", "placeholder": "Password"})
+    password_confirm = PasswordField("Confirm Password", validators=[DataRequired(), EqualTo("password")], render_kw={"class": "form-control", "placeholder": "Confirm Password"})
+    submit = SubmitField("Register", render_kw={"class": "btn btn-primary"})
 
     def validate_email_address(self, email_address_to_register):
         user = User.query.filter_by(email_address=email_address_to_register.data).first()
@@ -26,6 +26,13 @@ class RegistrationForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    email_address = StringField('Email Address', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    email_address = StringField('Email Address', validators=[DataRequired()], render_kw={"placeholder": "me@gmail.com"})
+    password = PasswordField('Password', validators=[DataRequired()], render_kw={"placeholder": "password"})  # value doesnt work
     submit = SubmitField('Sign In')
+
+
+class ResetPasswordForm(FlaskForm):
+    current_password = PasswordField('Current Password', validators=[DataRequired()])
+    new_password = StringField('New Password', validators=[DataRequired()])
+    confirm_password = PasswordField("Confirm Password", validators=[DataRequired(), EqualTo("new_password")])
+    submit = SubmitField('Submit')
