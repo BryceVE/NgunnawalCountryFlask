@@ -75,14 +75,14 @@ body {
 
 /**** NAVBAR ****/
 
-.navbar {
-    overflow: hidden;
-    background-color: #ffffff;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000; /*puts navbar in front of everything on page*/
-}
+/*.navbar {*/
+/*    overflow: hidden;*/
+/*    background-color: #ffffff;*/
+/*    position: fixed;*/
+/*    top: 0;*/
+/*    width: 100%;*/
+/*    z-index: 1000; !*puts navbar in front of everything on page*!*/
+/*}*/
 
 /*navbar logo*/
 .navbar > img {
