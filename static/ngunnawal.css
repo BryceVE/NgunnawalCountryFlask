@@ -150,9 +150,13 @@ body {
     padding-left: 1em;
 }
 
-/*horizontal seperator*/
+/*horizontal separators*/
 hr.horizontal-divider {
-  border-top: 3px solid #bbb;
+    border-top: 3px solid #bbb;
+}
+
+div.horizontal-divider {
+    border-top: 3px solid #bbb;
 }
 
 /*vertical seperator*/

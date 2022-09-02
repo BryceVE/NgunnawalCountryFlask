@@ -35,9 +35,27 @@
                 <li class="nav-item">
                     <a class="nav-link" href="photo">Photo Album</a> {# Photo Album page (not implemented) #}
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact">Contact Us</a> {# Contact us page #}
-                </li>
+                {% if user.is_anonymous %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact">Contact Us</a> {# Contact us page #}
+                    </li>
+                {% elif user.is_admin %}
+                    {# contact dropdown for admins #}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Contact Us
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-light"
+                            aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="contact">Contact Page</a></li>
+                            {# default contact page #}
+                            <div class="dropdown-divider"></div>
+                            <li><a class="dropdown-item" href="#">View Contact Messages</a></li>
+                            {# view contact messages #}
+                        </ul>
+                    </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="todo">To-Do</a> {# To Do page #}
                 </li>
@@ -51,33 +69,38 @@
         </form>
         <div class="nav navbar-nav">
             {% if user.is_anonymous %}
-                <li class="nav-item">
-                    <a class="nav-link" href="register">Register</a> {# register page #}
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="login">Log In</a> {# login page #}
-                </li>
-            {% else %}
-                {# dropdown #}
+                {# if user is not logged in #}
+                {# not logged in user dropdown #}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown
+                        User Account
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/">Action</a></li>
-                        <li><a class="dropdown-item" href="logout">Something else here</a></li>
+                    <ul class="dropdown-menu dropdown-menu-light dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="register">Register Account</a></li>
+                        {# regsiter account #}
+                        <div class="dropdown-divider"></div>
+                        <li><a class="dropdown-item" href="login">Log In</a></li>
+                        {# log in #}
                     </ul>
                 </li>
-
-                <li class="nav-item">
-                    <a class="nav-link">{{ user.name }}</a> {# display user name #}
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="reset_password">Reset Password</a> {# reset password #}
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="logout">Log Out</a> {# user logout #}
+            {% else %}
+                {# if user is logged in #}
+                {# logged in user dropdown #}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ user.name }} {# display user name #}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-light dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        {# User profile #}
+                        <li><a class="dropdown-item" href="reset_password">Reset Password</a></li>
+                        {# reset password #}
+                        <div class="dropdown-divider"></div>
+                        <li><a class="dropdown-item" href="logout">Logout</a></li>
+                        {# user logout #}
+                    </ul>
                 </li>
             {% endif %}
         </div>

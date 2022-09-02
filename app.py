@@ -25,7 +25,7 @@ if __name__ == '__main__':
 
 
 @app.route('/photo')
-def photoAlbum():
+def photo_album():
     return render_template("photo.html", title="Photo Album", user=current_user)
 
 
@@ -101,8 +101,10 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(email_address=form.email_address.data).first()
         if user is None or not user.check_password(form.password.data):
+            flash("There was a error logging you in")
             return redirect(url_for('login'))
         login_user(user)
+        flash("Successfully logged in as " + user.name)
         return redirect(url_for('homepage'))
     return render_template("login.html", title="Log In", form=form, user=current_user)
 
@@ -116,10 +118,8 @@ def reset_password():
     if form.validate_on_submit() and user.check_password(form.current_password.data):
         user.set_password(form.new_password.data)
         db.session.commit()
-        flash("Your password has been reset")
+        flash("Incorrect username or password")
         return redirect(url_for('homepage'))
-    else:
-        flash("There was a error resetting your password")
     return render_template("passwordreset.html", title='Reset Password', form=form, user=current_user)
 
 
@@ -127,4 +127,5 @@ def reset_password():
 @app.route('/logout')
 def logout():
     logout_user()
+    flash("Successfully logged out")
     return redirect(url_for('homepage'))

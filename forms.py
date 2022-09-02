@@ -13,8 +13,8 @@ class ContactForm (FlaskForm):
 
 
 class RegistrationForm(FlaskForm):
-    email_address = StringField("Email Address (Username)", validators=[DataRequired(), Email()], render_kw={"class": "form-control", "placeholder": "Email"})
-    name = StringField("Full Name", validators=[DataRequired()], render_kw={"class": "form-control", "placeholder": "Full Name"})
+    email_address = StringField("Email Address", validators=[DataRequired(), Email()], render_kw={"class": "form-control", "placeholder": "Email"})
+    name = StringField("Name (Username)", validators=[DataRequired()], render_kw={"class": "form-control", "placeholder": "Full Name"})
     password = PasswordField("Password", validators=[DataRequired()], render_kw={"class": "form-control", "placeholder": "Password"})
     password_confirm = PasswordField("Confirm Password", validators=[DataRequired(), EqualTo("password")], render_kw={"class": "form-control", "placeholder": "Confirm Password"})
     submit = SubmitField("Register", render_kw={"class": "btn btn-primary"})
@@ -26,13 +26,13 @@ class RegistrationForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    email_address = StringField('Email Address', validators=[DataRequired()], render_kw={"placeholder": "me@gmail.com"})
-    password = PasswordField('Password', validators=[DataRequired()], render_kw={"placeholder": "password"})  # value doesnt work
-    submit = SubmitField('Sign In')
+    email_address = StringField('Email Address', validators=[DataRequired()], render_kw={"placeholder": "user@gmail.com", "class": "form-control"})
+    password = PasswordField('Password', validators=[DataRequired()], render_kw={"placeholder": "password", "class": "form-control"})  # value doesnt work
+    submit = SubmitField('Sign In', render_kw={"class": "btn btn-primary"})
 
 
 class ResetPasswordForm(FlaskForm):
-    current_password = PasswordField('Current Password', validators=[DataRequired()])
-    new_password = StringField('New Password', validators=[DataRequired()])
-    confirm_password = PasswordField("Confirm Password", validators=[DataRequired(), EqualTo("new_password")])
-    submit = SubmitField('Submit')
+    current_password = PasswordField('Current Password', validators=[DataRequired()], render_kw={"class": "form-control", "placeholder": "Current Password"})
+    new_password = StringField('New Password', validators=[DataRequired()], render_kw={"class": "form-control", "placeholder": "New Password"})
+    confirm_password = PasswordField("Confirm Password", validators=[DataRequired(), EqualTo("new_password")], render_kw={"class": "form-control", "placeholder": "Confirm Password"})
+    submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
