@@ -129,3 +129,14 @@ def logout():
     logout_user()
     flash("Successfully logged out")
     return redirect(url_for('homepage'))
+
+
+# Error handlers
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html", user=current_user), 404
+
+
+@app.errorhandler(500)
+def page_not_found(e):
+    return render_template("500.html", user=current_user), 500
