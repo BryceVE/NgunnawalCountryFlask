@@ -52,8 +52,12 @@ def contact():
 @app.route('/contact_messages')
 @login_required
 def contact_messages():
-    all_messages = db.session.query(Contact).all()
-    return render_template("contact_messages.html", title="Contact Messages", user=current_user, messages=all_messages)
+    if current_user.is_admin():
+        all_messages = db.session.query(Contact).all()
+        return render_template("contact_messages.html", title="Contact Messages", user=current_user,
+                               messages=all_messages)
+    else:
+        return redirect("/")
 
 
 # To do page
@@ -66,7 +70,7 @@ def view_todo():
         db.session.add(new_todo)  # adds new entry into the to do table
         db.session.commit()  # commits added entry (row) to database
         db.session.refresh(new_todo)  # refreshes the database
-        return redirect("/todo.html")  # sends the user back to the to do page
+        return redirect("/todo")  # sends the user back to the to do page
     return render_template("todo.html", todos=all_todo, user=current_user)  # sends the user back to the to do page
 
 
@@ -84,7 +88,7 @@ def edit_note(todo_id):
         db.session.query(todo).filter_by(
             id=todo_id).delete()  # finds entry in db with matching id to todo_id and removes it
         db.session.commit()  # commits any changes to db
-    return redirect("/todo.html", code=302)  # redirects user to the normal to do page
+    return redirect("/todo", code=302)  # redirects user to the normal to do page
 
 
 # Register page
