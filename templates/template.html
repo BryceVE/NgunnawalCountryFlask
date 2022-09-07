@@ -35,11 +35,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="photo">Photo Album</a> {# Photo Album page (not implemented) #}
                 </li>
-                {% if user.is_anonymous %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact">Contact Us</a> {# Contact us page #}
-                    </li>
-                {% elif user.is_admin %}
+                {% if user.user_level == 2 %}
                     {# contact dropdown for admins #}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
@@ -51,9 +47,13 @@
                             <li><a class="dropdown-item" href="contact">Contact Page</a></li>
                             {# default contact page #}
                             <div class="dropdown-divider"></div>
-                            <li><a class="dropdown-item" href="#">View Contact Messages</a></li>
+                            <li><a class="dropdown-item" href="contact_messages">Contact Messages</a></li>
                             {# view contact messages #}
                         </ul>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact">Contact Us</a> {# Contact us page #}
                     </li>
                 {% endif %}
                 <li class="nav-item">
@@ -93,7 +93,7 @@
                         {{ user.name }} {# display user name #}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-light dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" href="profile">Profile</a></li>
                         {# User profile #}
                         <li><a class="dropdown-item" href="reset_password">Reset Password</a></li>
                         {# reset password #}

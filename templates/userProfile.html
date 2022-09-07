@@ -1,0 +1,59 @@
+{% extends 'template.html' %}
+
+{# Place the content for the cellContent1 in this block #}
+{% block cellContent1 %}
+    <div class="container text-left">
+        <div class="row">
+            <div class="col-md-3 fw-bold">
+                User Name:
+            </div>
+            <div class="col-md-6">
+                {{ user.name }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 fw-bold">
+                Email Address:
+            </div>
+            <div class="col-md-6">
+                {{ user.email_address }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 fw-bold">
+                User Level:
+            </div>
+            <div class="col-md-6">
+                {% if user.user_level == 1 %}
+                    User
+                {% elif user.user_level == 2 %}
+                    Administrator
+                {% endif %}
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-3 fw-bold">
+                Change Password:
+            </div>
+            <div class="col-md-6">
+                <a href="reset_password">
+                    <button class="btn btn-sm btn-secondary">Reset password</button>
+                </a>
+            </div>
+        </div>
+        <br>
+    </div>
+{% endblock %}
+
+{# Place the content for the cellContent2 in this block #}
+{% block cellContent2 %}
+{% endblock %}
+
+{# Place the content for the cellContent3 in this block #}
+{% block cellContent3 %}
+{% endblock %}
+
+{# Place the content for the cellContent4 in this block #}
+{% block cellContent4 %}
+{% endblock %}

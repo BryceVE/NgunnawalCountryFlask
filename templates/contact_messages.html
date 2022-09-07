@@ -2,20 +2,41 @@
 
 {# Place the content for the cellContent1 in this block #}
 {% block cellContent1 %}
-    First cell <br>-<br>-<br>-<br>-<br>-<br>-
+    {% for contact in messages %} {# loops through all entries in contact table in the database #}
+        <p>
+        <hr class="horizontal-divider">
+        <div class="row">
+            <div class="col-6">
+                <span class="fw-bold">Message id: </span>
+                {{ contact.id }}
+                <br>
+                <span class="fw-semibold">Name: </span>
+                {{ contact.name }}
+                <br>
+                <span class="fw-semibold">Email: </span>
+                {{ contact.email }}
+                <br>
+                <p>
+                    <span class="fw-semibold">Date submitted: </span>
+                    {{ contact.dateSubmitted.strftime('%H:%M - %d/%m/%Y') }}
+                </p>
+            </div>
+            <div class="col-6">
+                <span class="fw-bold">Message: </span>
+                {{ contact.message }}
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}
 
 {# Place the content for the cellContent2 in this block #}
 {% block cellContent2 %}
-    Left cell <br>-<br>-<br>-<br>-<br>-<br>-
 {% endblock %}
 
 {# Place the content for the cellContent3 in this block #}
 {% block cellContent3 %}
-    Right cell <br>-<br>-<br>-<br>-<br>-<br>-
 {% endblock %}
 
 {# Place the content for the cellContent4 in this block #}
 {% block cellContent4 %}
-    Bottom cell <br>-<br>-<br>-<br>-<br>-<br>-
 {% endblock %}

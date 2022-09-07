@@ -48,6 +48,14 @@ def contact():
     return render_template("contact.html", title="Contact Us", form=form, user=current_user)
 
 
+# Contact Messages (administrator)
+@app.route('/contact_messages')
+@login_required
+def contact_messages():
+    all_messages = db.session.query(Contact).all()
+    return render_template("contact_messages.html", title="Contact Messages", user=current_user, messages=all_messages)
+
+
 # To do page
 @app.route('/todo', methods=["POST", "GET"])
 def view_todo():
@@ -109,6 +117,13 @@ def login():
     return render_template("login.html", title="Log In", form=form, user=current_user)
 
 
+# User profile
+@app.route('/profile', methods=['GET', 'POST'])
+@login_required
+def profile():
+    return render_template("userProfile.html", title="User Profile", user=current_user)
+
+
 # reset password
 @app.route('/reset_password', methods=['GET', 'POST'])
 @login_required
@@ -138,5 +153,5 @@ def page_not_found(e):
 
 
 @app.errorhandler(500)
-def page_not_found(e):
+def internal_server_error(e):
     return render_template("500.html", user=current_user), 500
