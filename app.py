@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import current_user, login_user, LoginManager, logout_user, login_required
+from werkzeug.utils import secure_filename
+import os
 
 app = Flask(__name__)
 app.config.from_object(Config)  # loads the configuration for the database
@@ -9,9 +11,13 @@ db = SQLAlchemy(app)  # creates the db object using the configuration
 login = LoginManager(app)
 login.login_view = 'login'
 
+UPLOAD_FOLDER = './static/images/userPhotos/'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 # these imports must be after (db = SQLAlchemy(app))
-from models import Contact, todo, User
-from forms import ContactForm, RegistrationForm, LoginForm, ResetPasswordForm
+from models import Contact, todo, User, Photos
+from forms import ContactForm, RegistrationForm, LoginForm, ResetPasswordForm, PhotoUploadForm
 
 
 # Index / Home page
@@ -48,16 +54,49 @@ def contact():
     return render_template("contact.html", title="Contact Us", form=form, user=current_user)
 
 
-# Contact Messages (administrator)
+# Contact Messages (administrator only)
 @app.route('/contact_messages')
 @login_required
 def contact_messages():
-    if current_user.is_admin():
-        all_messages = db.session.query(Contact).all()
+    if current_user.is_admin():  # checks if the user is an admin
+        all_messages = db.session.query(Contact).all()  # gets all messages from contact table
         return render_template("contact_messages.html", title="Contact Messages", user=current_user,
                                messages=all_messages)
     else:
-        return redirect("/")
+        return redirect("/")  # if user is not an admin user gets redirected to home page
+
+
+# user photos page
+@app.route('/userPhotos', methods=['GET', 'POST'])
+@login_required
+def photos():
+    form = PhotoUploadForm()
+    user_images = Photos.query.filter_by(userid=current_user.id).all()  # gets all images from database that current user has submitted
+    if form.validate_on_submit():  # if the form is properly filled out
+        new_image = form.image.data  # gets file name
+        filename = secure_filename(new_image.filename)  # stores filename as a secure filename
+
+        if new_image and allowed_file(filename):  # checks if the file is an allowed filetype
+            file_ext = filename.split(".")[1]  # Get the file extension of the file
+            import uuid
+            random_filename = str(uuid.uuid4())  # creates a random file name using the uuid library
+            filename = random_filename + "." + file_ext  # overrides the file name with the randomly generated one
+            new_image.save(os.path.join(UPLOAD_FOLDER, filename))  # uploads the file to the userPhotos folder
+            photo = Photos(title=form.title.data, filename=filename,
+                           userid=current_user.id)  # creates a new photo model
+            db.session.add(photo)  # adds photo information into the database
+            db.session.commit()  # commits new data to database
+            flash("Image Uploaded")  # message to display to user
+            return redirect(url_for("photos"))
+        else:  # if filetype not allowed
+            flash("The File Upload failed.")  # display error message to user
+    return render_template("userPhotos.html", user=current_user, form=form, images=user_images)
+
+
+# used for checking that an attached file is the correct filetype
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 # To do page

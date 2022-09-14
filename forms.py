@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
-from wtforms import StringField, SubmitField, PasswordField, TextAreaField
+from wtforms import StringField, SubmitField, PasswordField, TextAreaField, FileField
+from flask_wtf.file import FileRequired
 from models import User
 
 
@@ -10,6 +11,13 @@ class ContactForm (FlaskForm):
     email = StringField("Email", validators=[DataRequired(), Email()], render_kw={"class": "form-control", "placeholder": "Email"})  # checks there is actual data being submitted and that it is a valid email address
     message = TextAreaField("Message", validators=[DataRequired()], render_kw={"class": "form-control", "placeholder": "Message to send"})  # checks there is actual data being submitted
     submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
+
+
+# used for uploading photos to the website
+class PhotoUploadForm(FlaskForm):
+    title = StringField("Image Title", validators=[DataRequired()], render_kw={"class": "form-control", "placeholder": "Name"})
+    image = FileField('Photo File Upload', validators=[FileRequired()], render_kw={"class": "form-control"})
+    submit = SubmitField("Upload Photo", render_kw={"class": "btn btn-primary"})
 
 
 class RegistrationForm(FlaskForm):

@@ -150,9 +150,9 @@ body {
     padding-left: 1em;
 }
 
-/*horizontal separators*/
+/*horizontal separators (used on contact messages & to do page)*/
 hr.horizontal-divider {
-    border-top: 3px solid #bbb;
+    border-top: 3px solid #969696;
 }
 
 div.horizontal-divider {

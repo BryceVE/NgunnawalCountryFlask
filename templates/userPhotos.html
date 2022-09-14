@@ -1,0 +1,57 @@
+{% extends 'template.html' %}
+
+{# Place the content for the cellContent1 in this block #}
+{% block cellContent1 %}
+    <div class="row">
+        <div class="col-6 vertical-divider">
+            <h2>Upload Photo</h2> <br>
+            <form method="post" enctype="multipart/form-data" action="">
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.title.label }}<br>
+                    {{ form.title(size=64) }}<br>
+                    {% for error in form.title.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.image.label }}<br>
+                    {{ form.image(size=64) }}<br>
+                    {% for error in form.image.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+
+                <p>{{ form.submit() }}</p>
+            </form>
+        </div>
+        <div class="col-6">
+            <div class="row">
+                <h2>Your Photos</h2>
+                {% for image in images %}
+                    <hr class="horizontal-divider">
+                    <div class="col-7">
+                        <span class="fw-semibold">Image Name: </span>{{ image.title }}<br>
+                        <span class="fw-semibold">Date Uploaded: </span>{{ image.dateSubmitted.strftime('%H:%M - %d/%m/%Y') }}
+                    </div>
+                    <div class="col-5">
+                        <img class="align-right" src="/static/images/userPhotos/{{ image.filename }}" width="50%">
+                    </div>
+                {% endfor %}
+                <hr class="horizontal-divider">
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{# Place the content for the cellContent2 in this block #}
+{% block cellContent2 %}
+{% endblock %}
+
+{# Place the content for the cellContent3 in this block #}
+{% block cellContent3 %}
+{% endblock %}
+
+{# Place the content for the cellContent4 in this block #}
+{% block cellContent4 %}
+{% endblock %}

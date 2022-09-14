@@ -19,6 +19,22 @@ class Contact(db.Model):
         self.dateSubmitted = datetime.today()  # inserts current date and time to be stored into table
 
 
+# for photos form
+class Photos(db.Model):
+    photoid = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255))
+    filename = db.Column(db.String(255))
+    userid = db.Column(db.Integer)
+    dateSubmitted = db.Column(db.DateTime)
+
+    # this functions will make it easier to create new entries in the database when uploading images
+    def __init__(self, title, filename, userid):
+        self.title = title
+        self.filename = filename
+        self.userid = userid
+        self.dateSubmitted = datetime.today()
+
+
 # for To do form to use what the user has submitted
 class todo (db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
