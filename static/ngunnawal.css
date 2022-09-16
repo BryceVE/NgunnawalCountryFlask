@@ -45,6 +45,14 @@ body {
     height: auto;
 }
 
+.img-border {
+    border: 3px solid #969696;
+}
+
+.img-border:hover {
+    border: 3px solid #3f3f3f;
+}
+
 /*span 2 cells across page*/
 .full-width {
     grid-column-start: 1;

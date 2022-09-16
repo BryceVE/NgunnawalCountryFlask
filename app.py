@@ -93,6 +93,14 @@ def photos():
     return render_template("userPhotos.html", user=current_user, form=form, images=user_images)
 
 
+# view single image
+@app.route('/userPhotos/<photo_id>')
+@login_required
+def photo_display(photo_id):
+    image = Photos.query.filter_by(photoid=photo_id).all()
+    return render_template("photoDisplay.html", user=current_user, photo=image, title="View Image")
+
+
 # used for checking that an attached file is the correct filetype
 def allowed_file(filename):
     return '.' in filename and \
