@@ -2,16 +2,27 @@
 
 {# Place the content for the cellContent1 in this block #}
 {% block cellContent1 %}
-    {% for photo in photo %}
+    {% for image in photo %} {# this only loops once but is needed #}
         <div>
-            <span class="fw-semibold">Name: </span>{{ photo.title }} <br>
-            <span class="fw-semibold">Date Uploaded: </span>{{ photo.dateSubmitted.strftime('%H:%M - %d/%m/%Y') }}
+            <span class="fw-semibold">Name: </span>{{ image.title }} <br>
+            <span class="fw-semibold">Uploaded by: </span>
+            {% for user in users %}
+                {% if user.id == image.userid %}
+                    {{ user.name }}
+                {% endif %}
+            {% endfor %}
+            <br>
+            <span class="fw-semibold">Date Uploaded: </span>{{ image.dateSubmitted.strftime('%H:%M - %d/%m/%Y') }}
             <br><br>
-            <img class="centre-img img-border" src="/static/images/userPhotos/{{ photo.filename }}" width="75%">
+            <img class="centre-img img-border" src="/static/images/userPhotos/{{ image.filename }}" width="75%">
         </div>
         <br>
+        <a href="/gallery">
+            <button class="btn btn-secondary">← Back to Photo Gallery</button>
+        </a>
+        <br><br>
         <a href="/userPhotos">
-            <button class="btn btn-secondary">Go Back</button>
+            <button class="btn btn-secondary">← Back to Your Photos</button>
         </a>
     {% endfor %}
 {% endblock %}

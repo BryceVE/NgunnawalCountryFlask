@@ -98,7 +98,16 @@ def photos():
 @login_required
 def photo_display(photo_id):
     image = Photos.query.filter_by(photoid=photo_id).all()
-    return render_template("photoDisplay.html", user=current_user, photo=image, title="View Image")
+    all_users = User.query.all()
+    return render_template("photoDisplay.html", user=current_user, photo=image, title="View Image", users=all_users)
+
+
+# photo gallery to display all images
+@app.route('/gallery')
+def photo_gallery():
+    all_images = Photos.query.all()
+    all_users = User.query.all()
+    return render_template("gallery.html", title="Photo Gallery", user=current_user, images=all_images, users=all_users)
 
 
 # used for checking that an attached file is the correct filetype

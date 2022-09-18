@@ -1,0 +1,41 @@
+{% extends 'template.html' %}
+
+{# Place the content for the cellContent1 in this block #}
+{% block cellContent1 %}
+    <div class="grid-container">
+        <div class="row">
+            {% for image in images %}
+                <div class="col-4">
+                    <div class="border">
+                        <span class="fw-semibold">Name: </span>{{ image.title }} <br>
+                        <span class="fw-semibold">Uploaded by: </span>
+                        {% for user in users %}  {# gets all users in the user table #}
+                            {% if user.id == image.userid %}  {# finds the same user (by id) who uploaded the image in the user table #}
+                                {{ user.name }}  {# displays that users' name #}
+                            {% endif %}
+                        {% endfor %}
+                        <br>
+                        <span class="fw-semibold">Date Uploaded: </span>{{ image.dateSubmitted.strftime('%H:%M - %d/%m/%Y') }}
+                        <br><br>
+                        <a href="/userPhotos/{{ image.photoid }}">
+                            <img class="centre-img img-border" src="/static/images/userPhotos/{{ image.filename }}"
+                                 width="50%">
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{# Place the content for the cellContent2 in this block #}
+{% block cellContent2 %}
+{% endblock %}
+
+{# Place the content for the cellContent3 in this block #}
+{% block cellContent3 %}
+{% endblock %}
+
+{# Place the content for the cellContent4 in this block #}
+{% block cellContent4 %}
+{% endblock %}
