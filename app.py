@@ -11,6 +11,7 @@ db = SQLAlchemy(app)  # creates the db object using the configuration
 login = LoginManager(app)
 login.login_view = 'login'
 
+# Information for uploaded images
 UPLOAD_FOLDER = './static/images/userPhotos/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -30,11 +31,7 @@ if __name__ == '__main__':
     app.run()
 
 
-@app.route('/photo')
-def photo_album():
-    return render_template("photo.html", title="Photo Album", user=current_user)
-
-
+# History Page
 @app.route('/history')
 def history():
     return render_template("history.html", title="History", user=current_user)
@@ -97,16 +94,16 @@ def photos():
 @app.route('/userPhotos/<photo_id>')
 @login_required
 def photo_display(photo_id):
-    image = Photos.query.filter_by(photoid=photo_id).all()
-    all_users = User.query.all()
+    image = Photos.query.filter_by(photoid=photo_id).all()  # gets image by the photo id in the URL
+    all_users = User.query.all()  # gets all users
     return render_template("photoDisplay.html", user=current_user, photo=image, title="View Image", users=all_users)
 
 
 # photo gallery to display all images
 @app.route('/gallery')
 def photo_gallery():
-    all_images = Photos.query.all()
-    all_users = User.query.all()
+    all_images = Photos.query.all()  # gets all photos
+    all_users = User.query.all()  # gets all users
     return render_template("gallery.html", title="Photo Gallery", user=current_user, images=all_images, users=all_users)
 
 
@@ -151,14 +148,14 @@ def edit_note(todo_id):
 @app.route("/register", methods=["GET", "POST"])
 def register():
     form = RegistrationForm()
-    if form.validate_on_submit():
+    if form.validate_on_submit():  # if form is valid
         new_user = User(email_address=form.email_address.data, name=form.name.data,
                         user_level=1)  # defaults to regular user
-        new_user.set_password(form.password.data)
-        db.session.add(new_user)
-        db.session.commit()
-        flash("Account successfully created")
-        return redirect(url_for("login"))
+        new_user.set_password(form.password.data)  # sets password
+        db.session.add(new_user)  # saves to database
+        db.session.commit()  # commits to database
+        flash("Account successfully created")  # display a flash message
+        return redirect(url_for("login"))  # redirects user to login page
     return render_template("registration.html", title="Register Account", form=form, user=current_user)
 
 
@@ -166,14 +163,14 @@ def register():
 @app.route('/login', methods=["GET", "POST"])
 def login():
     form = LoginForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(email_address=form.email_address.data).first()
-        if user is None or not user.check_password(form.password.data):
-            flash("There was a error logging you in")
-            return redirect(url_for('login'))
-        login_user(user)
-        flash("Successfully logged in as " + user.name)
-        return redirect(url_for('homepage'))
+    if form.validate_on_submit():  # if form is valid
+        user = User.query.filter_by(email_address=form.email_address.data).first()  # gets the user with the same email address in the database
+        if user is None or not user.check_password(form.password.data):  # checks if the users email exists and verifies the password
+            flash("There was a error logging you in")  # displays an error message
+            return redirect(url_for('login'))  # redirects user to login page to try again
+        login_user(user)  # else if user information is valid login the
+        flash("Successfully logged in as " + user.name)  # displays message to user
+        return redirect(url_for('homepage'))  # redirects user to home page
     return render_template("login.html", title="Log In", form=form, user=current_user)
 
 
@@ -188,30 +185,32 @@ def profile():
 @app.route('/reset_password', methods=['GET', 'POST'])
 @login_required
 def reset_password():
-    form = ResetPasswordForm()
-    user = User.query.filter_by(email_address=current_user.email_address).first()
-    if form.validate_on_submit() and user.check_password(form.current_password.data):
-        user.set_password(form.new_password.data)
-        db.session.commit()
-        flash("Incorrect username or password")
-        return redirect(url_for('homepage'))
+    form = ResetPasswordForm()  # gets form submitted
+    user = User.query.filter_by(email_address=current_user.email_address).first()  # gets user with the same email address
+    if form.validate_on_submit() and user.check_password(form.current_password.data):  # checks form is valid and that the current password is correct
+        user.set_password(form.new_password.data)  # sets new password into database
+        db.session.commit()  # commits changes to database
+        flash("Successfully reset password")  # display message to user
+        return redirect(url_for('homepage'))  # redirects user to home page
     return render_template("passwordreset.html", title='Reset Password', form=form, user=current_user)
 
 
 # logout
 @app.route('/logout')
 def logout():
-    logout_user()
-    flash("Successfully logged out")
+    logout_user()  # logs user out
+    flash("Successfully logged out")  # displays message
     return redirect(url_for('homepage'))
 
 
 # Error handlers
+# 404 Page Not Found
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template("404.html", user=current_user), 404
 
 
+# 500 Internal Server Error
 @app.errorhandler(500)
 def internal_server_error(e):
     return render_template("500.html", user=current_user), 500

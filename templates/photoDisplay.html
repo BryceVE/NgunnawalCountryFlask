@@ -4,23 +4,39 @@
 {% block cellContent1 %}
     {% for image in photo %} {# this only loops once but is needed #}
         <div>
+
+            {# Image Name #}
             <span class="fw-semibold">Name: </span>{{ image.title }} <br>
+
+            {# User who uploaded the image #}
             <span class="fw-semibold">Uploaded by: </span>
+            {# loops through all users in the user table #}
             {% for user in users %}
+                {# finds the same user (by id) who uploaded the image in the user table #}
                 {% if user.id == image.userid %}
+                    {# displays that users' name #}
                     {{ user.name }}
                 {% endif %}
             {% endfor %}
             <br>
+
+            {# Date Uploaded (as Hour:Minuite - Day/Month/Year)#}
             <span class="fw-semibold">Date Uploaded: </span>{{ image.dateSubmitted.strftime('%H:%M - %d/%m/%Y') }}
             <br><br>
+
+            {# Image #}
             <img class="centre-img img-border" src="/static/images/userPhotos/{{ image.filename }}" width="75%">
+
         </div>
         <br>
+
+        {# Back button to the gallery #}
         <a href="/gallery">
             <button class="btn btn-secondary">← Back to Photo Gallery</button>
         </a>
         <br><br>
+
+        {# Back button to user photos #}
         <a href="/userPhotos">
             <button class="btn btn-secondary">← Back to Your Photos</button>
         </a>

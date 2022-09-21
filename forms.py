@@ -20,6 +20,7 @@ class PhotoUploadForm(FlaskForm):
     submit = SubmitField("Upload Photo", render_kw={"class": "btn btn-primary"})
 
 
+# used for registering a new user
 class RegistrationForm(FlaskForm):
     email_address = StringField("Email Address", validators=[DataRequired(), Email()], render_kw={"class": "form-control", "placeholder": "Email"})
     name = StringField("Name (Username)", validators=[DataRequired()], render_kw={"class": "form-control", "placeholder": "Full Name"})
@@ -33,12 +34,14 @@ class RegistrationForm(FlaskForm):
             raise ValidationError("Please Use a Different Email Address)")
 
 
+# user log in form
 class LoginForm(FlaskForm):
     email_address = StringField('Email Address', validators=[DataRequired()], render_kw={"placeholder": "user@gmail.com", "class": "form-control"})
     password = PasswordField('Password', validators=[DataRequired()], render_kw={"placeholder": "password", "class": "form-control"})  # value doesnt work
     submit = SubmitField('Sign In', render_kw={"class": "btn btn-primary"})
 
 
+# reset password form
 class ResetPasswordForm(FlaskForm):
     current_password = PasswordField('Current Password', validators=[DataRequired()], render_kw={"class": "form-control", "placeholder": "Current Password"})
     new_password = StringField('New Password', validators=[DataRequired()], render_kw={"class": "form-control", "placeholder": "New Password"})

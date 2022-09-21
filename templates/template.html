@@ -14,28 +14,41 @@
 <!-- Nav bar -->
 <nav class="navbar navbar-expand-lg bg-light sticky-top">
     <div class="container-fluid">
+
         {# Logo in nav-bar (brings user to index page) #}
         <a href="/">
             <img src="/static/images/logo.png" alt="logo" width="60" height="60">
         </a>
+
         {# button for expanding nav-bar, used when screen is small #}
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
+        {# Left Side of Nav Bar #}
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 {# list of all nav-bar elements in order #}
+
+                {# Index/Home page #}
                 <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a> {# Index/Home page #}
+                    <a class="nav-link" href="/">Home</a>
                 </li>
+
+                {# History Page #}
                 <li class="nav-item">
-                    <a class="nav-link" href="/history">History</a> {# History Page (not implemented) #}
+                    <a class="nav-link" href="/history">History</a>
                 </li>
+
+                {# Photo Album Gallery #}
                 <li class="nav-item">
-                    <a class="nav-link" href="/gallery">Photo Gallery</a> {# Photo Album page (not implemented) #}
+                    <a class="nav-link" href="/gallery">Photo Gallery</a>
                 </li>
+
+                {# checks if user is admin #}
                 {% if user.user_level == 2 %}
+
                     {# contact dropdown for admins #}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
@@ -44,64 +57,91 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-light"
                             aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="/contact">Contact Page</a></li>
+
                             {# default contact page #}
+                            <li><a class="dropdown-item" href="/contact">Contact Page</a></li>
+
+                            {# divider #}
                             <div class="dropdown-divider"></div>
-                            <li><a class="dropdown-item" href="/contact_messages">Contact Messages</a></li>
+
                             {# view contact messages #}
+                            <li><a class="dropdown-item" href="/contact_messages">Contact Messages</a></li>
                         </ul>
                     </li>
                 {% else %}
+                    {# else if user is not an admin #}
+
+                    {# Contact us page #}
                     <li class="nav-item">
-                        <a class="nav-link" href="/contact">Contact Us</a> {# Contact us page #}
+                        <a class="nav-link" href="/contact">Contact Us</a>
                     </li>
                 {% endif %}
+
+                {# To Do page #}
                 <li class="nav-item">
-                    <a class="nav-link" href="/todo">To-Do</a> {# To Do page #}
+                    <a class="nav-link" href="/todo">To-Do</a>
                 </li>
             </ul>
         </div>
+
         {# search box and button #}
         <form class="d-flex" role="search">
             <input class="form-control" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-secondary" type="submit"><img src="/static/images/search.png" width="20"
                                                                          style="opacity: 60%"></button>
         </form>
+
+        {# Right side of Nav Bar#}
         <div class="nav navbar-nav">
+
+            {# if user is not logged in #}
             {% if user.is_anonymous %}
-                {# if user is not logged in #}
-                {# not logged in user dropdown #}
+
+                {# User Account Dropdown #}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
                         User Account
                     </a>
                     <ul class="dropdown-menu dropdown-menu-light dropdown-menu-end" aria-labelledby="navbarDropdown">
+
+                        {# Regsiter account #}
                         <li><a class="dropdown-item" href="/register">Register Account</a></li>
-                        {# regsiter account #}
+
+                        {# divider#}
                         <div class="dropdown-divider"></div>
+
+                        {# Log in#}
                         <li><a class="dropdown-item" href="/login">Log In</a></li>
-                        {# log in #}
                     </ul>
                 </li>
             {% else %}
                 {# if user is logged in #}
+
                 {# logged in user dropdown #}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ user.name }} {# display user name #}
+
+                        {# display user name #}
+                        {{ user.name }}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-light dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/profile">Profile</a></li>
+
                         {# User profile #}
-                        <li><a class="dropdown-item" href="/userPhotos">User Photos</a></li>
+                        <li><a class="dropdown-item" href="/profile">Profile</a></li>
+
                         {# User Photos#}
+                        <li><a class="dropdown-item" href="/userPhotos">User Photos</a></li>
+
+                        {# divider #}
                         <div class="dropdown-divider"></div>
+
+                        {# Reset password #}
                         <li><a class="dropdown-item" href="/reset_password">Reset Password</a></li>
-                        {# reset password #}
+
+                        {# User logout #}
                         <li><a class="dropdown-item" href="/logout">Logout</a></li>
-                        {# user logout #}
                     </ul>
                 </li>
             {% endif %}
@@ -109,12 +149,12 @@
     </div>
 </nav>
 
-<!-- Banner -->
+{# Banner #}
 <div class="banner">
     <img src="/static/images/banner.png" alt="website banner">
 </div>
 
-{# flash messages #}
+{# Flash messages #}
 {% with messages = get_flashed_messages() %}
     {% if messages %}
         <ul class="flashes">
@@ -127,20 +167,23 @@
     {% endif %}
 {% endwith %}
 
-<!-- Page Content (all page information/content goes in these) -->
+{# Page Content (all page information/content goes in these) #}
 <div class="container-fluid">
+
     {# New row #}
     <div class="row">
         <div class="col-12 align-centre">
             <h1>{{ title }}</h1>
         </div>
     </div>
+
     {# New row #}
     <div class="row">
         <div class="col-12">
             {% block cellContent1 %} {% endblock %}
         </div>
     </div>
+
     {# New row, contains two columns #}
     <div class="row">
         <div class="col-6">
@@ -150,6 +193,7 @@
             {% block cellContent3 %} {% endblock %}
         </div>
     </div>
+
     {# New row #}
     <div class="row">
         <div class="col-12">
@@ -158,7 +202,7 @@
     </div>
 </div>
 
-<!-- Footer -->
+{# Footer #}
 <div class="footer sticky-bottom border-top border-3">
     Page Footer
 </div>

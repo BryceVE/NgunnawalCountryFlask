@@ -4,6 +4,7 @@
 {% block cellContent1 %}
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
+
         {# name #}
         <p>
             {{ form.name.label }}<br> {# sets name of input #}
@@ -12,19 +13,21 @@
                 <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
+
         {# email #}
         <p>
-            {{ form.email.label }}<br>
-            {{ form.email(size=32) }}<br>
-            {% for error in form.email.errors %}
+            {{ form.email.label }}<br> {# sets name of input #}
+            {{ form.email(size=32) }}<br> {# sets size of input box #}
+            {% for error in form.email.errors %} {# displays error if contains invalid entry #}
                 <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
+
         {# message #}
         <p>
-            {{ form.message.label }}<br>
-            {{ form.message(size=32) }}<br>
-            {% for error in form.message.errors %}
+            {{ form.message.label }}<br> {# sets name of input #}
+            {{ form.message(size=32) }}<br> {# sets size of input box #}
+            {% for error in form.message.errors %} {# displays error if contains invalid entry #}
                 <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
@@ -35,15 +38,12 @@
 
 {# Place the content for the cellContent2 in this block #}
 {% block cellContent2 %}
-
 {% endblock %}
 
 {# Place the content for the cellContent3 in this block #}
 {% block cellContent3 %}
-
 {% endblock %}
 
 {# Place the content for the cellContent4 in this block #}
 {% block cellContent4 %}
-
 {% endblock %}

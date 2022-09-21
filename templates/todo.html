@@ -2,15 +2,21 @@
 
 {# Place the content for the cellContent1 in this block #}
 {% block cellContent1 %}
-    {# Add To Do #}
+
+    {# Add New To Do #}
     <div class="row">
+
         {# vertical divider creates a line between this and the to do list column #}
         <div class="col-5 vertical-divider">
+
             <h2>Add Todo</h2>
+
             <form method="POST" action="">
+
                 {# add to do input box #}
                 <input type="text" name="text" placeholder="Add a new TODO item" class="form-control">
                 <br>
+
                 {# add new to do submit button #}
                 <button type="submit" value="update" class="btn btn-primary">Create new entry</button>
             </form>
@@ -18,21 +24,31 @@
 
         {# To do List #}
         <div class="col-6">
+
             <h2>Todo List</h2>
-            {% for todo in todos %} {# loops through all entries in to do table in the database #}
-                <p> {# line break #}
-                <hr class="horizontal-divider"> {# horizontal divider creates a line between each to do entry #}
+
+            {# loops through all entries in to do table in the database #}
+            {% for todo in todos %}
+
+                {# horizontal divider creates a line between each to do entry #}
+                <p>
+                <hr class="horizontal-divider">
+
                 <form method="POST" action="/todoedit/{{ todo.id }}">
                     <input type="hidden" name="done" value="off">
+
                     {# little checkbox #}
                     <input type="checkbox" onclick="redirect('/todoedit/{{ todo.id }}')"
                            data-target="/todoedit/{{ todo.id }}" name="done">
+
                     {# input showing text of to do #}
                     <input type="text" title="{{ todo.dateAdded }}" value="{{ todo.text }}" name="text"
                            class="form-text">
+
                     {# update button #}
                     <button type="submit" value="update" class="form-control-sm">Update</button>
                 </form>
+
                 {# delete button #}
                 <form method="GET" action="/todoedit/{{ todo.id }}">
                     <button type="submit" value="delete" class="form-control-sm">Delete</button>
@@ -45,15 +61,12 @@
 
 {# Place the content for the cellContent2 in this block #}
 {% block cellContent2 %}
-
 {% endblock %}
 
 {# Place the content for the cellContent3 in this block #}
 {% block cellContent3 %}
-
 {% endblock %}
 
 {# Place the content for the cellContent4 in this block #}
 {% block cellContent4 %}
-
 {% endblock %}

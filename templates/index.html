@@ -2,9 +2,10 @@
 
 {# Place the content for the cellContent1 in this block #}
 {% block cellContent1 %}
-    {% if not user.is_anonymous %}
-        Welcome {{ user.name }}! <br>
+    {% if not user.is_anonymous %} {# if the user is logged in #}
+        Welcome {{ user.name }}! <br> {# display their name#}
     {% endif %}
+
     First cell <br>-<br>-<br>-<br>-<br>-<br>-
 {% endblock %}
 
