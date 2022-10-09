@@ -170,21 +170,21 @@
 {# Page Content (all page information/content goes in these) #}
 <div class="container-fluid">
 
-    {# New row #}
+    {# New title row #}
     <div class="row">
         <div class="col-12 align-centre">
             <h1>{{ title }}</h1>
         </div>
     </div>
 
-    {# New row #}
+    {# New main row #}
     <div class="row">
         <div class="col-12">
             {% block cellContent1 %} {% endblock %}
         </div>
     </div>
 
-    {# New row, contains two columns #}
+    {# New optional row, contains two optional columns #}
     <div class="row">
         <div class="col-6">
             {% block cellContent2 %} {% endblock %}
@@ -194,7 +194,7 @@
         </div>
     </div>
 
-    {# New row #}
+    {# New optional row #}
     <div class="row">
         <div class="col-12">
             {% block cellContent4 %} {% endblock %}
