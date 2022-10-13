@@ -1,5 +1,6 @@
 @startuml
 left to right direction
+
 actor "Unregistered User" as unregistered
 actor "Registered User" as registered
 actor "Admin" as admin
