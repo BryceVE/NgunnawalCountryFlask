@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="/static/ngunnawal.css">
     <link rel="stylesheet" href="/static/css/bootstrap.css">
     <script src="/static/js/bootstrap.bundle.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     {% block pageStyle %}
     {% endblock %}
 </head>
@@ -101,7 +103,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
-                        User Account
+                        Log in
                     </a>
                     <ul class="dropdown-menu dropdown-menu-light dropdown-menu-end" aria-labelledby="navbarDropdown">
 
@@ -157,10 +159,14 @@
 {# Flash messages #}
 {% with messages = get_flashed_messages() %}
     {% if messages %}
-        <ul class="flashes">
+        <ul class="flashes alert-align">
             {% for message in messages %}
-                <div class="alert alert-success" role="alert">
+                <div class="alert alert-primary alert-dismissible" role="alert">
                     {{ message }}
+                    {# dissmiss button #}
+                    <btn style="float: right" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </btn>
                 </div>
             {% endfor %}
         </ul>

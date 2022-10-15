@@ -46,8 +46,8 @@ def contact():
                               message=form.message.data)  # new variable to store data from form
         db.session.add(new_contact)  # adds new entry into the to do table
         db.session.commit()  # commits added entry to database
-        flash("Your message has been submitted")
-        return redirect("/")  # redirects user to home page
+        flash("Your message has been submitted!")
+        return redirect(url_for("contact"))  # reloads page
     return render_template("contact.html", title="Contact Us", form=form, user=current_user)
 
 
@@ -169,7 +169,7 @@ def login():
             flash("There was a error logging you in")  # displays an error message
             return redirect(url_for('login'))  # redirects user to login page to try again
         login_user(user)  # else if user information is valid login the
-        flash("Successfully logged in as " + user.name)  # displays message to user
+        flash("Successfully logged in as " + user.name + "!")  # displays message to user
         return redirect(url_for('homepage'))  # redirects user to home page
     return render_template("login.html", title="Log In", form=form, user=current_user)
 

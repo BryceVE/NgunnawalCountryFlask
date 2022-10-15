@@ -83,15 +83,6 @@ body {
 
 /**** NAVBAR ****/
 
-/*.navbar {*/
-/*    overflow: hidden;*/
-/*    background-color: #ffffff;*/
-/*    position: fixed;*/
-/*    top: 0;*/
-/*    width: 100%;*/
-/*    z-index: 1000; !*puts navbar in front of everything on page*!*/
-/*}*/
-
 /*navbar logo*/
 .navbar > img {
     float: left;
@@ -141,6 +132,14 @@ body {
 
 .navbar .search-container button:hover {
     background: #ccc;
+}
+
+/**** FLASH ALERT ****/
+
+/*used to fix the alerts position on the page*/
+.alert-align {
+    margin: 0;
+    padding: 1px;
 }
 
 /**** FOOTER ****/
