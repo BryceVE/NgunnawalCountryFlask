@@ -38,8 +38,14 @@ class Photos(db.Model):
 # for To do form to use what the user has submitted
 class todo (db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer)
     text = db.Column(db.Text)
     done = db.Column(db.Boolean)
+
+    def __init__(self, text, user_id):
+        self.user_id = user_id
+        self.text = text
+        self.done = False
 
 
 # for user registration

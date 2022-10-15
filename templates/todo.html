@@ -12,13 +12,22 @@
             <h2>Add Todo</h2>
 
             <form method="POST" action="">
+                {{ form.hidden_tag() }}
 
-                {# add to do input box #}
-                <input type="text" name="text" placeholder="Add a new TODO item" class="form-control">
-                <br>
+                <p>
+                    {{ form.text(size=32) }}<br> {# sets size of input box #}
+                    {% for error in form.text.errors %} {# displays error if contains invalid entry #}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
 
-                {# add new to do submit button #}
-                <button type="submit" value="update" class="btn btn-primary">Create new entry</button>
+                <p>
+                    {{ form.submit(size=32) }}<br> {# sets size of input box #}
+                    {% for error in form.submit.errors %} {# displays error if contains invalid entry #}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+
             </form>
         </div>
 

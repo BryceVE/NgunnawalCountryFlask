@@ -47,3 +47,8 @@ class ResetPasswordForm(FlaskForm):
     new_password = StringField('New Password', validators=[DataRequired()], render_kw={"class": "form-control", "placeholder": "New Password"})
     confirm_password = PasswordField("Confirm Password", validators=[DataRequired(), EqualTo("new_password")], render_kw={"class": "form-control", "placeholder": "Confirm Password"})
     submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
+
+
+class TodoForm(FlaskForm):
+    text = StringField('text', validators=[DataRequired()], render_kw={"placeholder": "Add a new TODO item", "class": "form-control"})
+    submit = SubmitField('Create new entry', render_kw={"class": "btn btn-primary"})

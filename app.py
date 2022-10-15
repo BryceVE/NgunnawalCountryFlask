@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
+from sqlalchemy import null
+
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import current_user, login_user, LoginManager, logout_user, login_required
@@ -18,7 +20,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # these imports must be after (db = SQLAlchemy(app))
 from models import Contact, todo, User, Photos
-from forms import ContactForm, RegistrationForm, LoginForm, ResetPasswordForm, PhotoUploadForm
+from forms import ContactForm, RegistrationForm, LoginForm, ResetPasswordForm, PhotoUploadForm, TodoForm
 
 
 # Index / Home page
@@ -115,16 +117,23 @@ def allowed_file(filename):
 
 # To do page
 @app.route('/todo', methods=["POST", "GET"])
-def view_todo():
-    all_todo = db.session.query(todo).all()  # retrieves whole of to do table from database
-    if request.method == "POST":  # if form is attempting to submit data
-        new_todo = todo(text=request.form['text'])  # new variable to store data from form
-        new_todo.done = False  # sets done to false by default
-        db.session.add(new_todo)  # adds new entry into the to do table
-        db.session.commit()  # commits added entry (row) to database
-        db.session.refresh(new_todo)  # refreshes the database
-        return redirect("/todo")  # sends the user back to the to do page
-    return render_template("todo.html", todos=all_todo, user=current_user)  # sends the user back to the to do page
+def todo_page():
+    if current_user.is_anonymous:  # if the user isn't logged in
+        all_todo = db.session.query(todo).filter_by(user_id=0).all()  # gets nothing
+    else:
+        all_todo = db.session.query(todo).filter_by(user_id=current_user.id).all()  # gets all todos of user logged in
+    form = TodoForm()
+    if form.validate_on_submit():  # if form is attempting to submit data
+        if current_user.is_anonymous:  # if user is not logged in
+            flash("You must be logged in to use this feature")  # error message
+            return redirect(url_for("login"))  # redirect to login page
+        else:
+            new_todo = todo(text=form.text.data, user_id=current_user.id)  # new variable to store data from form
+            db.session.add(new_todo)  # adds new entry into the to do table
+            db.session.commit()  # commits added entry (row) to database
+            db.session.refresh(new_todo)  # refreshes the database
+            return redirect("/todo")  # sends the user back to the to do page
+    return render_template("todo.html", todos=all_todo, form=form, user=current_user)  # sends the user back to the to do page
 
 
 # to do page for editing to do entries
