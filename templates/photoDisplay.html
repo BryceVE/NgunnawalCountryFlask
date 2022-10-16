@@ -61,10 +61,11 @@
         <a href="/userPhotos">
             <button class="btn btn-secondary">← Back to Your Photos</button>
         </a>
+        <br><br>
     {% endfor %}
 
-    {# Missing image #}
-    {% if photo is defined %}
+    {# no image??? #}
+    {% if photo|length == 0 %}
         <div class="row align-centre">
             <div class="col-3">
                 {# Back button to the gallery #}

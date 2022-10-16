@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
-from wtforms import StringField, SubmitField, PasswordField, TextAreaField, FileField
+from wtforms import StringField, SubmitField, PasswordField, TextAreaField, FileField, BooleanField
 from flask_wtf.file import FileRequired
 from models import User
 
@@ -37,7 +37,7 @@ class RegistrationForm(FlaskForm):
 # user log in form
 class LoginForm(FlaskForm):
     email_address = StringField('Email Address', validators=[DataRequired()], render_kw={"placeholder": "user@gmail.com", "class": "form-control"})
-    password = PasswordField('Password', validators=[DataRequired()], render_kw={"placeholder": "password", "class": "form-control"})  # value doesnt work
+    password = PasswordField('Password', validators=[DataRequired()], render_kw={"placeholder": "password", "class": "form-control", "aria-describedby": "basic-addon2"})  # value doesnt work
     submit = SubmitField('Sign In', render_kw={"class": "btn btn-primary"})
 
 

@@ -96,8 +96,7 @@ def photos():
 @login_required
 def photo_delete(photo_id):
     if request.method == "GET":  # if the form is submitted with GET method (trying to access something in the db)
-        db.session.query(Photos).filter_by(
-            photoid=photo_id).delete()  # finds entry in db with matching id to photo_id and removes it
+        db.session.query(Photos).filter_by(photoid=photo_id).delete()  # finds entry in db with matching id to photo_id and removes it
         db.session.commit()  # commits any changes to db
     return redirect("/userPhotos")
 
@@ -185,8 +184,11 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():  # if form is valid
         user = User.query.filter_by(email_address=form.email_address.data).first()  # gets the user with the same email address in the database
-        if user is None or not user.check_password(form.password.data):  # checks if the users email exists and verifies the password
-            flash("There was a error logging you in")  # displays an error message
+        if user is None:  # checks if the users email exists
+            flash("This user does not exist!")  # displays an error message
+            return redirect(url_for('login'))  # redirects user to login page to try again
+        if not user.check_password(form.password.data):  # verify the password
+            flash("Your email or password is wrong!")  # displays an error message
             return redirect(url_for('login'))  # redirects user to login page to try again
         login_user(user)  # else if user information is valid login the
         flash("Successfully logged in as " + user.name + "!")  # displays message to user
