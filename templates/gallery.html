@@ -2,8 +2,16 @@
 
 {# Place the content for the cellContent1 in this block #}
 {% block cellContent1 %}
+
     <div class="grid-container">
         <div class="row">
+            <div class="col-12">
+                Upload your own photos:
+                <a href="/userPhotos">
+                    <button class="btn btn-primary" href="/userPhotos">Your Photos</button>
+                </a>
+                <br><br>
+            </div>
             {% for image in images %} {# loops through all images in database #}
                 <div class="col-4">
                     <div class="border">

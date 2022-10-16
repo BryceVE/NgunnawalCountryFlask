@@ -134,6 +134,10 @@ body {
     background: #ccc;
 }
 
+.underline:hover {
+    text-decoration: underline;
+}
+
 /**** ALIGNMENT ****/
 
 /*used to fix the alerts position on the page*/
@@ -142,7 +146,7 @@ body {
     padding: 1px;
 }
 
-.todo-list {
+.inline {
     display: inline;
 }
 

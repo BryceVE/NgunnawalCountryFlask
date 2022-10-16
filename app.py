@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-from sqlalchemy import null
+from sqlalchemy import null, func
 
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
@@ -85,11 +85,21 @@ def photos():
                            userid=current_user.id)  # creates a new photo model
             db.session.add(photo)  # adds photo information into the database
             db.session.commit()  # commits new data to database
-            flash("Image Uploaded")  # message to display to user
+            flash("Image uploaded to the photo gallery!")  # message to display to user
             return redirect(url_for("photos"))
         else:  # if filetype not allowed
-            flash("The File Upload failed.")  # display error message to user
+            flash("The file upload failed")  # display error message to user
     return render_template("userPhotos.html", user=current_user, form=form, images=user_images)
+
+
+@app.route("/photodelete/<photo_id>", methods=['GET', 'POST'])
+@login_required
+def photo_delete(photo_id):
+    if request.method == "GET":  # if the form is submitted with GET method (trying to access something in the db)
+        db.session.query(Photos).filter_by(
+            photoid=photo_id).delete()  # finds entry in db with matching id to photo_id and removes it
+        db.session.commit()  # commits any changes to db
+    return redirect("/userPhotos")
 
 
 # view single image
@@ -97,8 +107,9 @@ def photos():
 @login_required
 def photo_display(photo_id):
     image = Photos.query.filter_by(photoid=photo_id).all()  # gets image by the photo id in the URL
+    max_image = db.session.query(func.max(Photos.photoid)).scalar()  # gets max value of photo id as a readable int (scalar)
     all_users = User.query.all()  # gets all users
-    return render_template("photoDisplay.html", user=current_user, photo=image, title="View Image", users=all_users)
+    return render_template("photoDisplay.html", user=current_user, photo=image, max_photo=max_image, title="View Image", users=all_users)
 
 
 # photo gallery to display all images

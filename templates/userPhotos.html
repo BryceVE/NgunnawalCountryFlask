@@ -41,7 +41,7 @@
                 {% for image in images %}
 
                     <hr class="horizontal-divider">
-                    <div class="col-7">
+                    <div class="col-6">
 
                         {# Photo Name #}
                         <span class="fw-semibold">Name: </span>{{ image.title }}<br>
@@ -53,9 +53,18 @@
                     {# Photo (as a link) #}
                     <div class="col-5">
                         <a href="/userPhotos/{{ image.photoid }}">
-                            <img class="align-right img-border" src="/static/images/userPhotos/{{ image.filename }}"
+                            <img class="align-right img-border"
+                                 src="/static/images/userPhotos/{{ image.filename }}"
                                  width="50%">
                         </a>
+                    </div>
+
+                    {# delete button #}
+                    <div class="col-1">
+                        <form method="GET" action="/photodelete/{{ image.photoid }}">
+                            <button style="float: right" type="submit" value="delete" class="btn btn-secondary"><i
+                                    class="fa fa-trash-o"></i></button>
+                        </form>
                     </div>
                 {% endfor %}
                 <hr class="horizontal-divider">

@@ -43,9 +43,9 @@
                 <p>
                 <hr class="horizontal-divider">
 
-                <form class="todo-list" method="POST" action="/todoedit/{{ todo.id }}">
+                <form class="inline" method="POST" action="/todoedit/{{ todo.id }}">
                     {# hidden checkbox to help with submitting value for form #}
-                    <input type="hidden" name="done" {% if todo.done == False %} value="1" {% endif %}>
+                    <input type="hidden" name="done" value="0">
 
                     {# little checkbox #}
                     <input type="checkbox" name="done" {% if todo.done == True %}
@@ -59,9 +59,8 @@
                     <button type="submit" value="update" class="btn btn-outline-dark">Save</button>
                 </form>
 
-
                 {# delete button #}
-                <form class="todo-list" method="GET" action="/todoedit/{{ todo.id }}">
+                <form class="inline" method="GET" action="/todoedit/{{ todo.id }}">
                     <button style="float: right" type="submit" value="delete" class="btn btn-secondary"><i
                             class="fa fa-trash-o"></i></button>
                 </form>
