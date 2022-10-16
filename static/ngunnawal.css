@@ -134,12 +134,16 @@ body {
     background: #ccc;
 }
 
-/**** FLASH ALERT ****/
+/**** ALIGNMENT ****/
 
 /*used to fix the alerts position on the page*/
 .alert-align {
     margin: 0;
     padding: 1px;
+}
+
+.todo-list {
+    display: inline;
 }
 
 /**** FOOTER ****/

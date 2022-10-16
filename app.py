@@ -139,11 +139,11 @@ def todo_page():
 # to do page for editing to do entries
 @app.route("/todoedit/<todo_id>", methods=["POST",
                                            "GET"])  # route accepts variable (link/todoedit/<varialbe>) this refers to entry in table with id of <todo_id>
-def edit_note(todo_id):
+def edit_todo(todo_id):
     if request.method == "POST":  # if form is attempting to submit data
-        db.session.query(todo).filter_by(id=todo_id).update({  # finds entry in db with matching id to todo_id
+        db.session.query(todo).filter_by(id=todo_id).update({  # finds entry in db with matching id to todo_id and updates it
             "text": request.form['text'],
-            "done": True if request.form['done'] == "on" else False
+            "done": True if request.form['done'] == "1" else False
         })
         db.session.commit()  # commits any changes to db
     elif request.method == "GET":  # if the form is submitted with GET method (trying to access something in the db)

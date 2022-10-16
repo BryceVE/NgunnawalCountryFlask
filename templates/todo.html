@@ -32,7 +32,7 @@
         </div>
 
         {# To do List #}
-        <div class="col-6">
+        <div class="col-7">
 
             <h2>Todo List</h2>
 
@@ -43,25 +43,29 @@
                 <p>
                 <hr class="horizontal-divider">
 
-                <form method="POST" action="/todoedit/{{ todo.id }}">
-                    <input type="hidden" name="done" value="off">
+                <form class="todo-list" method="POST" action="/todoedit/{{ todo.id }}">
+                    {# hidden checkbox to help with submitting value for form #}
+                    <input type="hidden" name="done" {% if todo.done == False %} value="1" {% endif %}>
 
                     {# little checkbox #}
-                    <input type="checkbox" onclick="redirect('/todoedit/{{ todo.id }}')"
-                           data-target="/todoedit/{{ todo.id }}" name="done">
+                    <input type="checkbox" name="done" {% if todo.done == True %}
+                           checked {% endif %}>
 
                     {# input showing text of to do #}
                     <input type="text" title="{{ todo.dateAdded }}" value="{{ todo.text }}" name="text"
-                           class="form-text">
+                           class="form-floating">
 
                     {# update button #}
-                    <button type="submit" value="update" class="form-control-sm">Update</button>
+                    <button type="submit" value="update" class="btn btn-outline-dark">Save</button>
                 </form>
 
+
                 {# delete button #}
-                <form method="GET" action="/todoedit/{{ todo.id }}">
-                    <button type="submit" value="delete" class="form-control-sm">Delete</button>
+                <form class="todo-list" method="GET" action="/todoedit/{{ todo.id }}">
+                    <button style="float: right" type="submit" value="delete" class="btn btn-secondary"><i
+                            class="fa fa-trash-o"></i></button>
                 </form>
+                <br>
             {% endfor %}
             <br>
         </div>

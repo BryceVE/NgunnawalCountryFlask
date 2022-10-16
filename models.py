@@ -42,10 +42,10 @@ class todo (db.Model):
     text = db.Column(db.Text)
     done = db.Column(db.Boolean)
 
-    def __init__(self, text, user_id):
+    def __init__(self, text, user_id, done):
         self.user_id = user_id
         self.text = text
-        self.done = False
+        self.done = done
 
 
 # for user registration
