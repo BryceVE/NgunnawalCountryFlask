@@ -2,7 +2,7 @@
 
 {# Place the content for the cellContent1 in this block #}
 {% block cellContent1 %}
-    <form action="" method="post">
+    <form class="inline" action="" method="post">
         {{ form.hidden_tag() }}
 
         {# Email #}
@@ -23,6 +23,9 @@
             {% endfor %}
         </p>
 
-        <p>{{ form.submit() }}</p> {# submit button for form #}
+        <p class="inline">{{ form.submit() }}</p> {# submit button for form #}
+    </form>
+    <form style="float: right" class="inline">
+        <button class="btn btn-secondary">Register here</button>
     </form>
 {% endblock %}
