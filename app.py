@@ -20,7 +20,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # these imports must be after (db = SQLAlchemy(app))
 from models import Contact, todo, User, Photos
-from forms import ContactForm, RegistrationForm, LoginForm, ResetPasswordForm, PhotoUploadForm, TodoForm
+from forms import ContactForm, RegistrationForm, LoginForm, ResetPasswordForm, ResetPasswordFormAdmin, PhotoUploadForm, TodoForm
 
 
 # Index / Home page
@@ -63,6 +63,35 @@ def contact_messages():
                                messages=all_messages)
     else:
         return redirect("/")  # if user is not an admin user gets redirected to home page
+
+
+# List all users (administrator only)
+@app.route('/admin/list_all_users')
+@login_required
+def list_all_users():
+    if current_user.is_admin():  # checks if the user is an admin
+        all_users = User.query.all()  # gets all users in the database
+        return render_template("listAllUsers.html", title="All Active Users", user=current_user, users=all_users)
+    else:  # if user is not an admin
+        flash("You must be an administrator to access this page")
+        return redirect(url_for("homepage"))
+
+
+# reset user passwords (administrators only) todo: test this works!
+@app.route('/reset_password_admin/<userid>', methods=['GET', 'POST'])
+@login_required
+def reset_user_password(userid):
+    form = ResetPasswordFormAdmin()
+    user_to_reset = User.query.filter_by(id=userid).first()  # gets user chosen to have password reset
+    if not current_user.is_admin():
+        flash("You must be an administrator to access this page")
+        return redirect("/reset_password")
+    if form.validate_on_submit():
+        user_to_reset.set_password(form.new_password.data)  # sets new password
+        db.session.commit()
+        flash('Password has been reset for user {}'.format(user_to_reset.name))  # message to admin
+        return redirect(url_for('homepage'))
+    return render_template("passwordResetAdmin.html", title='Reset Password', form=form, user=current_user, user_to_reset=user_to_reset)
 
 
 # user photos page
