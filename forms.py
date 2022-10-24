@@ -63,7 +63,7 @@ class ResetPasswordForm(FlaskForm):
     submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
 
 
-# reset password form
+# reset password form for admins
 class ResetPasswordFormAdmin(FlaskForm):
     new_password = StringField('New Password', validators=[DataRequired()],
                                render_kw={"class": "form-control", "placeholder": "New Password"})

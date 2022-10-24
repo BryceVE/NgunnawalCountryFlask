@@ -71,13 +71,13 @@ def contact_messages():
 def list_all_users():
     if current_user.is_admin():  # checks if the user is an admin
         all_users = User.query.all()  # gets all users in the database
-        return render_template("listAllUsers.html", title="All Active Users", user=current_user, users=all_users)
+        return render_template("listAllUsers.html", title="All Users", user=current_user, users=all_users)
     else:  # if user is not an admin
         flash("You must be an administrator to access this page")
         return redirect(url_for("homepage"))
 
 
-# reset user passwords (administrators only) todo: test this works!
+# reset user passwords (administrators only) todo: test this works
 @app.route('/reset_password_admin/<userid>', methods=['GET', 'POST'])
 @login_required
 def reset_user_password(userid):
@@ -91,7 +91,7 @@ def reset_user_password(userid):
         db.session.commit()
         flash('Password has been reset for user {}'.format(user_to_reset.name))  # message to admin
         return redirect(url_for('homepage'))
-    return render_template("passwordResetAdmin.html", title='Reset Password', form=form, user=current_user, user_to_reset=user_to_reset)
+    return render_template("passwordResetAdmin.html", title='Reset User Password', form=form, user=current_user, user_to_reset=user_to_reset)
 
 
 # user photos page

@@ -141,7 +141,7 @@ body {
 /**** ALIGNMENT ****/
 
 /*used to fix the alerts position on the page*/
-.alert-align {
+.align-whole-page {
     margin: 0;
     padding: 1px;
 }
@@ -172,6 +172,10 @@ hr.horizontal-divider {
 
 div.horizontal-divider {
     border-top: 3px solid #bbb;
+}
+
+div.soft-horizontal-divider {
+    border-top: 3px solid #ededed;
 }
 
 /*vertical seperator*/

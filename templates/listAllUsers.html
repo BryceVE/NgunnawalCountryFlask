@@ -3,11 +3,26 @@
 {# Place the content for the cellContent1 in this block #}
 {% block cellContent1 %}
     <div class="container-fluid">
+    <div class="row">
+        <div class="col-1"><strong>ID</strong></div>
+        <div class="col-2"><strong>Name</strong></div>
+        <div class="col-3"><strong>Email</strong></div>
+        <div class="col-1"><strong>Level</strong></div>
+        <div class="col-1"><strong>Active</strong></div>
+    </div>
+    <div class="horizontal-divider align-whole-page"></div>
         {% for user in users %}
             <div class="row">
-                <div class="col-md-4">{{ user.email_address }}</div>
-                <div class="col-md-4"><a href="/reset_password_admin/{{ user.id }}">Reset Password</a></div>
+                <div class="col-1 vertical-divider">{{ user.id }}</div>
+                <div class="col-2 vertical-divider">{{ user.name }}</div>
+                <div class="col-3 vertical-divider">{{ user.email_address }}</div>
+                <div class="col-1 vertical-divider">{{ user.user_level }}</div>
+                <div class="col-1 vertical-divider"></div>
+                <div class="col-4 align-right"><a href="/reset_password_admin/{{ user.id }}">
+                    <button class="btn btn-secondary">Reset Password</button>
+                </a></div>
             </div>
+            <div class="soft-horizontal-divider"></div>
         {% endfor %}
     </div>
 {% endblock %}
