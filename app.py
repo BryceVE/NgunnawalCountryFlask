@@ -77,7 +77,7 @@ def list_all_users():
         return redirect(url_for("homepage"))
 
 
-# reset user passwords (administrators only) todo: test this works
+# reset user passwords (administrators only)
 @app.route('/reset_password_admin/<userid>', methods=['GET', 'POST'])
 @login_required
 def reset_user_password(userid):
