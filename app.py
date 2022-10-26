@@ -111,7 +111,7 @@ def photos():
             filename = random_filename + "." + file_ext  # overrides the file name with the randomly generated one
             new_image.save(os.path.join(UPLOAD_FOLDER, filename))  # uploads the file to the userPhotos folder
             photo = Photos(title=form.title.data, filename=filename,
-                           userid=current_user.id)  # creates a new photo model
+                           userid=current_user.id, enabled=1)  # creates a new photo model
             db.session.add(photo)  # adds photo information into the database
             db.session.commit()  # commits new data to database
             flash("Image uploaded to the photo gallery!")  # message to display to user
@@ -127,7 +127,21 @@ def photo_delete(photo_id):
     if request.method == "GET":  # if the form is submitted with GET method (trying to access something in the db)
         db.session.query(Photos).filter_by(photoid=photo_id).delete()  # finds entry in db with matching id to photo_id and removes it
         db.session.commit()  # commits any changes to db
+        flash("Image successfully deleted!")
     return redirect("/userPhotos")
+
+
+@app.route("/admin/photodeleteadmin/<photo_id>", methods=['GET', 'POST'])
+@login_required
+def photo_delete_admin(photo_id):
+    if not current_user.is_admin:  # if user is not an admin
+        flash("You need to be an admin to do this!")
+        return redirect(url_for('homepage'))
+    if request.method == "GET":  # if the form is submitted with GET method (trying to access something in the db)
+        db.session.query(Photos).filter_by(photoid=photo_id).delete()  # finds entry in db with matching id to photo_id and removes it
+        db.session.commit()  # commits any changes to db
+        flash("Image successfully deleted!")
+    return redirect(url_for('list_all_photos'))
 
 
 # view single image
@@ -146,6 +160,32 @@ def photo_gallery():
     all_images = Photos.query.all()  # gets all photos
     all_users = User.query.all()  # gets all users
     return render_template("gallery.html", title="Photo Gallery", user=current_user, images=all_images, users=all_users)
+
+
+# List all photos (administrator only)
+@app.route('/admin/list_all_photos')
+@login_required
+def list_all_photos():
+    if current_user.is_admin():  # checks if the user is an admin
+        all_photos = Photos.query.all()  # gets all photos in the database
+        all_users = User.query.all()  # gets all users in the database
+        return render_template("listAllPhotos.html", title="All Users", user=current_user, photos=all_photos, users=all_users)
+    else:  # if user is not an admin
+        flash("You must be an administrator to access this page")
+        return redirect(url_for("homepage"))
+
+
+# enable / disable image
+@app.route('/admin/photo_enable_disable/<photo_id>')
+@login_required
+def photo_enable_disable(photo_id):
+    if not current_user.is_admin():  # checks if user is not an admin
+        flash("You must be an administrator to access this page")
+        return redirect(url_for('homepage'))
+    photo = Photos.query.filter_by(photoid=photo_id).first()  # finds user selected
+    photo.enabled = not photo.enabled  # switches boolean value in table
+    db.session.commit()
+    return redirect(url_for("list_all_photos"))
 
 
 # used for checking that an attached file is the correct filetype
@@ -256,8 +296,8 @@ def user_enable_disable(userid):
     if not current_user.is_admin():  # checks if user is not an admin
         flash("You must be an administrator to access this page")
         return redirect(url_for('homepage'))
-    user = User.query.filter_by(id=userid).first()
-    user.active = not user.active
+    user = User.query.filter_by(id=userid).first()  # finds user selected
+    user.active = not user.active  # switches boolean value in table
     db.session.commit()
     return redirect(url_for("list_all_users"))
 

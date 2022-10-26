@@ -48,6 +48,10 @@
 
                         {# Date Uploaded (as Hour:Minuite - Day/Month/Year) #}
                         <span class="fw-semibold">Date Uploaded: </span>{{ image.dateSubmitted.strftime('%H:%M - %d/%m/%Y') }}
+
+                        {% if not image.enabled %}
+                            <span class="fw-bolder" style="color: darkred">This image is currently disabled</span>
+                        {% endif %}
                     </div>
 
                     {# Photo (as a link) #}
