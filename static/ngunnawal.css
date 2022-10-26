@@ -141,7 +141,7 @@ body {
 /**** ALIGNMENT ****/
 
 /*used to fix the alerts position on the page*/
-.align-whole-page {
+.align-page-width {
     margin: 0;
     padding: 1px;
 }

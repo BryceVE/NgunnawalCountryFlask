@@ -198,7 +198,7 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():  # if form is valid
         new_user = User(email_address=form.email_address.data, name=form.name.data,
-                        user_level=1)  # defaults to regular user
+                        user_level=1, active=1)  # defaults to regular user
         new_user.set_password(form.password.data)  # sets password
         db.session.add(new_user)  # saves to database
         db.session.commit()  # commits to database
@@ -218,6 +218,9 @@ def login():
             return redirect(url_for('login'))  # redirects user to login page to try again
         if not user.check_password(form.password.data):  # verify the password
             flash("Your email or password is wrong!")  # displays an error message
+            return redirect(url_for('login'))  # redirects user to login page to try again
+        if not user.active:
+            flash("This account is no longer active!")  # displays an error message
             return redirect(url_for('login'))  # redirects user to login page to try again
         login_user(user)  # else if user information is valid login the
         flash("Successfully logged in as " + user.name + "!")  # displays message to user
@@ -244,6 +247,19 @@ def reset_password():
         flash("Successfully reset password")  # display message to user
         return redirect(url_for('homepage'))  # redirects user to home page
     return render_template("passwordreset.html", title='Reset Password', form=form, user=current_user)
+
+
+# enable / disable user account
+@app.route('/admin/user_enable_disable/<userid>')
+@login_required
+def user_enable_disable(userid):
+    if not current_user.is_admin():  # checks if user is not an admin
+        flash("You must be an administrator to access this page")
+        return redirect(url_for('homepage'))
+    user = User.query.filter_by(id=userid).first()
+    user.active = not user.active
+    db.session.commit()
+    return redirect(url_for("list_all_users"))
 
 
 # logout

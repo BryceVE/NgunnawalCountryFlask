@@ -55,6 +55,7 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(255))
     password_hash = db.Column(db.String(255))
     user_level = db.Column(db.Integer)
+    active = db.Column(db.Boolean)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)

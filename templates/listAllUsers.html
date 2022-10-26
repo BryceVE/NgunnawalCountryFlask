@@ -11,12 +11,14 @@
             <div class="col-1"><strong>Active</strong></div>
             <div class="col-4"><strong>Actions</strong></div>
         </div>
-        <div class="horizontal-divider align-whole-page"></div>
+        <div class="horizontal-divider align-page-width"></div>
         {% for user in users %}
             <div class="row">
                 <div class="col-1 vertical-divider">{{ user.id }}</div>
                 <div class="col-2 vertical-divider">{{ user.name }}</div>
                 <div class="col-3 vertical-divider">{{ user.email_address }}</div>
+
+                {# user level #}
                 {% if user.user_level == 1 %}
                     <div class="col-1 vertical-divider">user</div>
                 {% elif user.user_level == 2 %}
@@ -24,32 +26,29 @@
                 {% else %}
                     <div class="col-1 vertical-divider"><strong>error: </strong>{{ user.user_level }}</div>
                 {% endif %}
-                <div class="col-1 vertical-divider"></div>
+
+                {# account active #}
+                {% if user.active == 1 %}
+                    <div class="col-1 vertical-divider">Enabled</div>
+                {% else %}
+                    <div class="col-1 vertical-divider">Disabled</div>
+                {% endif %}
+
+                {# buttons #}
                 <div class="col-4">
-                    <a href="/admin/list_all_users">
-                        <button class="btn btn-danger">Disable User</button>
+                    <a href="/admin/user_enable_disable/{{ user.id }}">
+                        {% if user.active == 1 %}
+                            <button class="btn btn-danger btn-sm">Disable User</button>
+                        {% else %}
+                            <button class="btn btn-success btn-sm">Enable User</button>
+                        {% endif %}
                     </a>
-{#                    <a href="/admin/list_all_users">#}
-{#                        <button class="btn btn-success">Enable User</button>#}
-{#                    </a>#}
                     <a style="float: right" href="/reset_password_admin/{{ user.id }}">
-                        <button class="btn btn-secondary">Reset Password</button>
+                        <button class="btn btn-secondary btn-sm">Reset Password</button>
                     </a>
                 </div>
             </div>
             <div class="soft-horizontal-divider"></div>
         {% endfor %}
     </div>
-{% endblock %}
-
-{# Place the content for the cellContent2 in this block #}
-{% block cellContent2 %}
-{% endblock %}
-
-{# Place the content for the cellContent3 in this block #}
-{% block cellContent3 %}
-{% endblock %}
-
-{# Place the content for the cellContent4 in this block #}
-{% block cellContent4 %}
 {% endblock %}
