@@ -9,7 +9,7 @@
             <div class="col-2"><strong>Title</strong></div>
             <div class="col-1"><strong>User ID</strong></div>
             <div class="col-3"><strong>Date Uploaded</strong></div>
-            <div class="col-1"><strong>Enabled</strong></div>
+            <div class="col-1"><strong>Active</strong></div>
             <div class="col-3"><strong>Actions</strong></div>
         </div>
         <div class="horizontal-divider"></div>
@@ -57,7 +57,7 @@
                         {% endif %}
                     </a>
 
-                    {# image delete#}
+                    {# image delete #}
                     <form class="inline" method="GET" action="/admin/photodeleteadmin/{{ image.photoid }}">
                         <button style="float: right" type="submit" value="delete" class="btn btn-secondary"><i
                                 class="fa fa-trash-o"></i></button>

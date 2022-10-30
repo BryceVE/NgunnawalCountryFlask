@@ -62,7 +62,21 @@ def contact_messages():
         return render_template("contact_messages.html", title="Contact Messages", user=current_user,
                                messages=all_messages)
     else:
-        return redirect("/")  # if user is not an admin user gets redirected to home page
+        return redirect(url_for('homepage'))  # if user is not an admin user gets redirected to home page
+
+
+# admin message delete
+@app.route("/admin/messagedeleteadmin/<message_id>", methods=['GET', 'POST'])
+@login_required
+def message_delete_admin(message_id):
+    if not current_user.is_admin:  # if user is not an admin
+        flash("You need to be an admin to do this!")
+        return redirect(url_for('homepage'))
+    if request.method == "GET":  # if the form is submitted with GET method (trying to access something in the db)
+        db.session.query(Contact).filter_by(id=message_id).delete()  # finds entry in db with matching id to photo_id and removes it
+        db.session.commit()  # commits any changes to db
+        flash("Message successfully deleted!")
+    return redirect(url_for('contact_messages'))
 
 
 # List all users (administrator only)
@@ -83,10 +97,10 @@ def list_all_users():
 def reset_user_password(userid):
     form = ResetPasswordFormAdmin()
     user_to_reset = User.query.filter_by(id=userid).first()  # gets user chosen to have password reset
-    if not current_user.is_admin():
-        flash("You must be an administrator to access this page")
+    if not current_user.is_admin():  # if user is not admin
+        flash("You must be an administrator to access this page")  # error message
         return redirect("/reset_password")
-    if form.validate_on_submit():
+    if form.validate_on_submit():  # if user is admin
         user_to_reset.set_password(form.new_password.data)  # sets new password
         db.session.commit()
         flash('Password has been reset for user {}'.format(user_to_reset.name))  # message to admin
@@ -121,6 +135,7 @@ def photos():
     return render_template("userPhotos.html", user=current_user, form=form, images=user_images)
 
 
+# delete an uploaded photo
 @app.route("/photodelete/<photo_id>", methods=['GET', 'POST'])
 @login_required
 def photo_delete(photo_id):
@@ -131,6 +146,7 @@ def photo_delete(photo_id):
     return redirect("/userPhotos")
 
 
+# admin photo delete
 @app.route("/admin/photodeleteadmin/<photo_id>", methods=['GET', 'POST'])
 @login_required
 def photo_delete_admin(photo_id):
@@ -259,7 +275,7 @@ def login():
         if not user.check_password(form.password.data):  # verify the password
             flash("Your email or password is wrong!")  # displays an error message
             return redirect(url_for('login'))  # redirects user to login page to try again
-        if not user.active:
+        if not user.active:  # if user account is not active
             flash("This account is no longer active!")  # displays an error message
             return redirect(url_for('login'))  # redirects user to login page to try again
         login_user(user)  # else if user information is valid login the
