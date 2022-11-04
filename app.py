@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-from sqlalchemy import null, func
+from sqlalchemy import func
 
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
@@ -59,8 +59,9 @@ def contact():
 def contact_messages():
     if current_user.is_admin():  # checks if the user is an admin
         all_messages = db.session.query(Contact).all()  # gets all messages from contact table
+        all_messages_count = Contact.query.count()  # gets count of all messages in database
         return render_template("contact_messages.html", title="Contact Messages", user=current_user,
-                               messages=all_messages)
+                               messages=all_messages, messages_count=all_messages_count)
     else:
         return redirect(url_for('homepage'))  # if user is not an admin user gets redirected to home page
 
@@ -85,7 +86,8 @@ def message_delete_admin(message_id):
 def list_all_users():
     if current_user.is_admin():  # checks if the user is an admin
         all_users = User.query.all()  # gets all users in the database
-        return render_template("listAllUsers.html", title="All Users", user=current_user, users=all_users)
+        all_users_count = User.query.count()  # gets count of all users in database
+        return render_template("listAllUsers.html", title="All Users", user=current_user, users=all_users, users_count=all_users_count)
     else:  # if user is not an admin
         flash("You must be an administrator to access this page")
         return redirect(url_for("homepage"))
@@ -114,6 +116,7 @@ def reset_user_password(userid):
 def photos():
     form = PhotoUploadForm()
     user_images = Photos.query.filter_by(userid=current_user.id).all()  # gets all images from database that current user has submitted
+    user_images_count = Photos.query.filter_by(userid=current_user.id).count()  # gets the could of all images he user has uploaded
     if form.validate_on_submit():  # if the form is properly filled out
         new_image = form.image.data  # gets file name
         filename = secure_filename(new_image.filename)  # stores filename as a secure filename
@@ -132,7 +135,7 @@ def photos():
             return redirect(url_for("photos"))
         else:  # if filetype not allowed
             flash("The file upload failed")  # display error message to user
-    return render_template("userPhotos.html", user=current_user, form=form, images=user_images)
+    return render_template("userPhotos.html", user=current_user, form=form, images=user_images, images_count=user_images_count)
 
 
 # delete an uploaded photo
@@ -184,8 +187,9 @@ def photo_gallery():
 def list_all_photos():
     if current_user.is_admin():  # checks if the user is an admin
         all_photos = Photos.query.all()  # gets all photos in the database
+        all_photos_count = Photos.query.count()  # gets count of all photos in database
         all_users = User.query.all()  # gets all users in the database
-        return render_template("listAllPhotos.html", title="All Users", user=current_user, photos=all_photos, users=all_users)
+        return render_template("listAllPhotos.html", title="All Photos", user=current_user, photos=all_photos, photos_count=all_photos_count, users=all_users)
     else:  # if user is not an admin
         flash("You must be an administrator to access this page")
         return redirect(url_for("homepage"))
@@ -276,7 +280,7 @@ def login():
             flash("Your email or password is wrong!")  # displays an error message
             return redirect(url_for('login'))  # redirects user to login page to try again
         if not user.active:  # if user account is not active
-            flash("This account is no longer active!")  # displays an error message
+            flash("This account is no longer active! Contact an admin if you need help")  # displays an error message
             return redirect(url_for('login'))  # redirects user to login page to try again
         login_user(user)  # else if user information is valid login the
         flash("Successfully logged in as " + user.name + "!")  # displays message to user

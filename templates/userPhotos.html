@@ -35,7 +35,8 @@
         <div class="col-6">
             <div class="row">
 
-                <h2>Your Photos</h2>
+                {# displays how many images the user has uploaded #}
+                <h2>Your Photos ({{ images_count }})</h2>
 
                 {# loops through all photos current user has uploaded #}
                 {% for image in images %}
@@ -47,8 +48,9 @@
                         <span class="fw-semibold">Name: </span>{{ image.title }}<br>
 
                         {# Date Uploaded (as Hour:Minuite - Day/Month/Year) #}
-                        <span class="fw-semibold">Date Uploaded: </span>{{ image.dateSubmitted.strftime('%H:%M - %d/%m/%Y') }}
+                        <span class="fw-semibold">Date Uploaded: </span>{{ image.dateSubmitted.strftime('%H:%M - %d/%m/%Y') }}<br>
 
+                        {# if the image is not enabled #}
                         {% if not image.enabled %}
                             <span class="fw-bolder" style="color: darkred">This image is currently disabled</span>
                         {% endif %}
